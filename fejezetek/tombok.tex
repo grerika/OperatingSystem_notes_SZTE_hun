@@ -1,0 +1,69 @@
+Forrás: \url{http://www.cyberciti.biz/faq/bash-for-loop-array/}
+
+
+\subsubsection*{Deklarálás}
+
+
+\begin{lstlisting}
+declare -a arrayname
+\end{lstlisting}
+
+vagy
+
+\begin{lstlisting}
+array=( one two three )
+files=( "/etc/passwd" "/etc/group" "/etc/hosts" )
+limits=( 10, 20, 26, 39, 48)
+\end{lstlisting}
+
+vagy
+
+\begin{lstlisting}
+array[1]=one
+array[2]=two
+array[4]=three
+\end{lstlisting}
+
+A tömbök indexei egészek lehetnek, nem feltétlenül folytonosak.
+
+\subsubsection*{Kiiratás, használat}
+A \texttt{printf} használatával kiirathatjuk a tartalmunkat, például így
+\begin{lstlisting}
+printf "%s\n" "${array[@]}"
+printf "%s\n" "${files[@]}"
+printf "%s\n" "${limits[@]}"
+\end{lstlisting}
+
+vagy számláló ciklussal végigjárhatjuk a tömb elemeit
+
+\begin{lstlisting}
+for i in "${tombnev[@]}"
+do
+	echo $i
+done
+\end{lstlisting}
+
+
+Ha az indexek értékeire vagyunk kíváncsiak, azt is lekérhetjük, azt a \verb.${!tombnev[*]}. tartalmazza
+
+Ha szeretnénk kilistázni az indexeket a hozzájuk tartozó tömbértékekkel, akkor azt így tehetjük:
+\begin{lstlisting}
+for I in ${!array[*]}; do
+  echo $I: ${array[$I]}
+done
+\end{lstlisting}
+
+%\dots és még egy példa arra, hogy a tömbelemek típusa vegyes is lehet
+\begin{lstlisting}
+
+array=( "/etc/passwd" "/etc/group" "/etc/hosts" )
+array[5]=5
+array[7]=7
+array[8]="nyolc"
+array[100]="szaz"
+
+
+for I in ${!array[*]}; do
+  echo -e "$I\t${array[$I]}"
+done
+\end{lstlisting}

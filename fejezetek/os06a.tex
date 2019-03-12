@@ -1,0 +1,273 @@
+\hyphenation{il-lesz-ke-dik}
+\begin{center}
+\Ovalbox{\large \verb.awk 'PROGRAM' ÁLLOMÁNY(OK).}
+\end{center}
+
+\begin{itemize}
+\item Leírás: \texttt{man awk/gawk, info gawk}
+\item Mintakereső és -feldolgozó program saját programozási nyelvvel
+\item Sorban beolvassa a bemeneti állomány(ok) tartalmát, miközben az AWK nyelven írt PROGRAM-ban leírt műveleteket végrehajtja. Szintén szűrő.
+\item Ha nem adunk meg állományt, akkor a szabványos bemenetről olvas.
+\item A forrásprogram szövegét érdemes aposztrófok közé zárni, hogy a benne szereplő karaktereket a shell ne tekintse speciálisnak.
+\item \textbf{-f PROGFÁJL}: a végrehajtandó programot PROGFÁJL-ból olvassa
+\end{itemize}
+
+\noindent\Ovalbox{gawk} Az eredeti awk program GNU változata, GNU/Linux alatt ezt használhatjuk. % Jóval többet tud elődjénél.
+\bigskip
+
+\noindent\verb.#! /usr/bin/awk -f.: Ha az AWK forrásprogramot állományban tároljuk el, az
+állomány első sorába ezt a megjegyzést (parancsértelmező fejlécet) írjuk, valamint
+futtathatóvá tesszük az állományt, akkor az AWK prog\-ra\-mot a shell scriptek
+mintájára a \verb@./PROGFÁJL ÁLLOMÁNY(OK)@ paranccsal is lefuttathatjuk.
+
+\subsection{Forrásprogram felépítése}
+
+Minden AWK forrásprogram \textbf{szabályok} sorozata. Minden szabály
+tartalmazhat egy \textbf{mintát} és egy hozzá tartozó tevékenységet avagy
+\textbf{akciót}. Az akciót különféle utasításokból állíthatjuk össze.
+
+\begin{itemize}
+\item A szabályok alakja: \verb.MINTA{AKCIÓ}.
+\item A szabályokat egymástól sortöréssel vagy pontosvesszővel lehet elválasztani.
+\item A feldolgozás során a bemenet tartalmát \emph{rekordok}ra (record) bontja, ezek
+alapesetben a bemenet sorai lesznek. A rekordokat szintén továbbontja \emph{mezők}re
+(field), amiket alapesetben az illető sor szavai képviselnek.
+\item A bemenet feldolgozása rekordonként történik. Minden rekordot megpróbál
+illeszteni sorban az összes szabály mintájára, az első szabálytól kezdve. Ha a
+rekord illeszkedett egy szabály mintájára, akkor végrehajtódik a hozzá tartozó
+akció. Végül az összes szabály ellenőrzése után rátér a következő rekord feldolgozására.
+\item A szabályok sorrendje fontos, hiszen a mintákra való illeszkedés ellenőrzése, s
+így az akciók végrehajtásának sorrendje ettől függ!
+Hiányzó minta esetén az illető akció minden rekord esetén lefut.
+\item A szabályokból az akciót is el lehet hagyni a kapcsos zárójelekkel együtt. A
+hiányzó akció ekvivalens a \verb.{print}. akcióval, ami kiírja az egész rekord tartalmát.
+\item Vigyázat! A \verb.{}. páros az üres akciót jelöli, tehát nem egyezik meg az előbb
+említett esettel (ti. az akció elhagyásával)!
+\item Bármely mintát vagy utasítást folytathatjuk a következő sorban, ha az
+aktuális sort a $\backslash$ jellel zárjuk.
+\item Az akciók utasításlistája akár több sorból is állhat. Egy sorba több utasítást
+is írhatunk, ha őket pontosvesszővel (;) választjuk el egymástól. Hasonlóan,
+a pontosvessző használatával több szabályt is írhatunk egy sorba.
+\item Szóközöket és tabulátorokat tetszés szerint használhatunk a műveleti jelek,
+operandusok, utasítások, paraméterek, stb. között. Üres sorok szintén megengedettek.
+\item \#: A sor végéig tartó \emph{megjegyzés} kezdetét jelzi.
+\item Az AWK is különbséget tesz a kisbetűk és nagybetűk között!
+\end{itemize}
+
+
+
+\subsection{Minták}
+
+Minden minta egy logikai feltételt fogalmaz meg. Ha a feltétel teljesül egy
+konkrét rekord esetén, akkor azt mondjuk, hogy a rekord illeszkedik a
+mintára. Fontos, hogy olyan feltételt is megfogalmazhatunk, amely nem
+(vagy nemcsak) a rekord tartalmától függ, hanem például valamely változótól!
+
+\subsubsection*{Elemi minták}
+\begin{description}
+\item[\texttt{(MINTA)}] csoportosítás (műveleti sorrend felülbírálása), MINTÁ-ra
+illeszkedik
+\item[\texttt{!MINTA}] logikai tagadás (negáció)
+\item[\texttt{/REGKIF/}] igaz, ha az egész rekord illeszkedik a reguláris kifejezésre
+\item[\texttt{KIF$\sim$/REGEX/}] igaz, ha a KIF kifejezés  mint szöveg
+illeszkedik a reguláris kifejezésre
+\item[\texttt{KIF!$\sim$/REGEX/}] igaz, ha a kifejezés nem illeszkedik a REGKIF-re
+\item[relációs kifejezések] tetszőleges kifejezés, amely relációs jelet tartalmaz
+\item[\texttt{BEGIN}] csak a bemenet feldolgozása előtt teljesül\label{begin}
+\item[\texttt{END}] csak a bemenet feldolgozása után teljesül
+\end{description}
+
+\begin{itemize}
+\item A \texttt{BEGIN}  és \texttt{END}  mintákhoz mindig meg kell adni az akciót is! Továbbá
+ezek a speciális minták nem kombinálhatók semmilyen más mintával,
+valamint nem alkalmazható rájuk a csoportosítás és a negáció sem!
+\item A \texttt{BEGIN}  mintához tartozó akció pontosan egyszer hajtódik végre,
+mégpedig a legelső bemeneti rekord feldolgozása előtt. Ez akkor is így
+történik, ha több bemeneti állományt adtunk meg.
+\item Hasonlóan, az \texttt{END}  mintához tartozó akció is pontosan egyszer, az utolsó
+bemeneti rekord feldolgozása után hajtódik végre. Ezt az awk program
+befejeződése követi.
+\end{itemize}
+
+
+\subsubsection*{Összetett minták}
+\begin{description}
+\item[\texttt{MINTA1\&\&MINTA2}] logikai ÉS (konjunkció)
+\item[\texttt{MINTA1||MINTA2}] logikai MEGENGEDŐ VAGY (diszjunkció)
+\item[\texttt{MINTA1,MINTA2}] Rekordok tartományára illeszkedik, kezdve egy olyan
+rekorddal, amely MINTA1-re illeszkedik, egészen egy olyan rekordig,
+amely MINTA2-re illeszkedik. Nem kombinálható semmilyen más
+mintával!
+\end{description}
+
+
+\subsection{Konstansok}
+\begin{description}
+\item[Szám avagy numerikus konstansok]\hfill
+	\begin{itemize}
+	\item egész számok (pl. 12)
+	\item valós törtszámok tizedesponttal (pl. 25.3)
+	\item egész vagy valós szám hatványkitevővel (pl. 1.234e+2=123.4)
+	\end{itemize}
+\item[Szöveges avagy sztring konstansok]\hfill
+	\begin{itemize}
+	\item \verb."SZOVEG".
+	\item \verb."".: üres sztring (0 karakter hosszúságú szöveg)
+	\item A szövegben a \verb.\. speciális (az ún. escape-karakter), így használhatók pl.
+	a következő escape-szekvenciák: \verb.\\. (közönséges \verb.\.), \verb.\". (közönséges
+	idézőjel), \verb.\n. (sortörés), \verb.\t. (tabulátor).
+	\end{itemize}
+\item[Konstans reguláris kifejezések]\hfill
+	\begin{itemize}
+	\item \texttt{/REGKIF/}
+	\item A reguláris kifejezésen belül a \verb.\. speciális, így használhatók a \verb.\\.
+	(közönséges \verb.\.) és \verb.\/. (közönséges \verb./.) karakterpárosok.
+	\end{itemize}
+\end{description}
+
+\subsection{Változók}
+\begin{itemize}
+\item A változók \emph{élettartama dinamikus}, az első használatkor automatikusan létrejönnek (nem kell őket deklarálni).
+\item A változók neve betűket, számokat és aláhúzásjelet (\verb._.) tartalmazhat, és nem kezdődhet számjeggyel.
+\item \textbf{Változók típusai}
+	\begin{itemize}
+	\item  numerikus változók (valós számokat tárolnak)
+	\item  szöveges változók avagy sztringek (string)
+	\item  egydimenziós tömbök 	
+	\end{itemize}
+
+\item A tömböket kivéve minden változó \emph{típusa dinamikus}, azaz a használattól függően változik! \\
+	Ez a tömbelemekre is vonatkozik 
+
+\item Egy változó típusát nem lehet tömbről numerikusra vagy sztringre változtatni, és viszont!
+\item A változók értékét az awk automatikusan konvertálja számmá vagy szöveggé, szintén a használati módtól 
+(művelettől, függvénytől) függően. Ha a szöveget nem lehet számmá konvertálni 
+(mert nem egy érvényes alakú számot tartalmaz), nullát kapunk.
+
+\item \textbf{Manuális konverzió}\hfill
+	\begin{itemize}
+	\item szövegből szám: adjunk hozzá 0-t
+	\item számból szöveg: fűzzük hozzá az üres sztringet (\verb."".)
+	\end{itemize}
+		
+\item \texttt{NÉV=ÉRTÉK}\hfill
+	\begin{itemize}
+	\item Értékadás egy létező változónak, vagy új változó létrehozása. A változó típusa \texttt{ÉRTÉK} típusa lesz.
+	\item A C programozási nyelv egyéb értékadó, növelő és csökkentő műveletei is használhatók
+	\item Az ÉRTÉK természetesen nemcsak konstans, hanem kifejezés is lehet.
+	\item Többszörös értékadás (\texttt{NÉV1=NÉV2=ÉRTÉK}) is megengedett.
+	\end{itemize}
+\item \texttt{NÉV}\hfill
+	\begin{itemize}
+	\item a változó aktuális értékét jelöli
+	\item definiálatlan (ti. amelyiknek eddig nem adtunk értéket) változó értéke az üres sztring (\verb."".) ill. 0.
+	\end{itemize}
+\end{itemize}
+
+\subsection{Beépített változók}
+Az awk program indulásakor már létezik jónéhány különleges, \textbf{beépített változó} (built-in variable). 
+Ezek neve egységesen csupa nagybetűből áll, és tartalmuk egyrészt a felhasználónak szóló fontos információkat hordoz,
+másrészt némelyikük az awk program működését ill. a bemenet feldolgozásának módját vezérli.
+\begin{description}
+\item[\tt FILENAME] Az aktuális bemeneti állomány neve, illetve \texttt{-} a szabványos bemenet esetén. 
+
+	A \texttt{BEGIN} minta (lásd \pageref{begin}. oldal) akcióján belül definiálatlan.
+\item[\tt FNR] az aktuális rekord sorszáma az aktuális bemeneti állományon belül
+\item[\tt FS] bemeneti mezőhatároló karakter (input field separator), kezdetben a szóköz
+\item[\tt IGNORECASE] Ha értéke nemzérus, akkor a sztringek összehasonlítása ill. a
+reguláris kifejezések illesztése nem különbözteti meg a kisbetűket a nagyoktól. Alapesetben értéke definiálatlan (effektíve nulla).
+\item[\tt NF] az aktuális rekord mezőinek száma (number of fields)
+\item[\tt NR] Az aktuális rekord sorszáma az eddig feldolgozott bemenet tekintetében. 
+
+	Egy bemeneti állomány ill. a szabványos bemenet esetén egyenlő az \texttt{FNR}-rel.
+\item[\tt OFS] Kimeneti mezőhatároló (output field separator), kezdetben a szóköz. 
+
+	Értéke tetszőleges szöveg lehet, nemcsak egy karakter.
+\item[\tt ORS] Kimeneti rekordhatároló (output record separator) kezdetben a sortörés. 
+
+	Ez is tetszőleges szöveget tartalmazhat.
+\item[\tt RS] bemeneti rekordhatároló karakter (input record separator), kezdetben a sortörés
+\end{description}
+
+
+
+\subsection{Mezők}
+A bemenet rekordokra bontását, ill. azoknak mezőkre bontását két beépített változó vezérli. 
+Az \texttt{RS} változó tartalma egy karakter (alapesetben sortörés), ez jelzi a rekordokat elválasztó karaktert. 
+Hasonlóan, az \texttt{FS} változó tartalma (alapesetben szóköz) határozza meg, mi határolja a mezőket a rekordokon
+belül. Ha az \texttt{FS} értéke a szóköz (alapeset), akkor a mezőket legalább egy szóköz vagy tabulátor választja el.
+
+\begin{itemize} 
+\item  Az aktuális rekord mezőinek a számát az \texttt{NF} beépített változó tárolja.
+\item  A mezők típusa ugyancsak numerikus vagy szöveges lehet, az aktuális használattól függően. Összehasonlításkor a mezők tartalmát számnak tekinti az awk, ha az valóban egy érvényes számot tartalmaz, továbbá ha a másik tag szám konstans, numerikus változó vagy mezőhivatkozás.
+\item \verb.$KIF.\hfill
+	\begin{itemize}
+	\item  Az aktuális rekord megadott sorszámú mezőjének tartalma. Ezt a jelölést mezőhivatkozásnak nevezzük.
+	\item  Tetszőleges kifejezést is használhatunk, például \verb.$(2*3). a hatodik mezőt jelzi. 
+			Természetesen a negatív értékek nem megengedettek.
+	\item  \verb.$NF. az aktuális rekord utolsó mezőjének tartalma
+	\item  \verb.$0. (dollárjel és nulla): az aktuális rekord teljes tartalma
+	\end{itemize}
+\item  \verb.$KIF=ÉRTÉK.\hfill
+	\begin{itemize}
+	\item egy adott mező – ill. \verb.KIF = 0., esetén a rekord – értékének módosítása
+	\item Ha \verb.$0. tartalmát változtatjuk meg. akkor minden mező új értéket kap.
+	Ha viszont egy mező tartalmát módosítjuk, akkor \verb.$0. értékét az awk
+		újraépíti oly módon, hogy a mezőket az \texttt{OFS} értéke határolja majd el.
+	\item Ha \texttt{KIF > NF}, akkor a mezők számát kibővíti, és \texttt{NF}-et is módosítja.
+	Szükség szerint a közbülső helyekre új mezőket szúr be, ezek értéke az
+		üres sztring (\verb."".) lesz. Végül pedig \verb.$0. tartalmát is újraszámítja az előbb leírt módon.
+	\end{itemize}
+\end{itemize}
+
+
+
+\subsection*{Gyakorló feladatok}
+Dolgozzuk fel az \texttt{ls -l} parancs kimenetét egy tetszőlegesen választott könyvtár esetén!
+
+\begin{enumerate}
+\item Írjuk ki csak a könyvtárbejegyzések nevét és méretét! Vegyük figyelembe, hogy névben előfordulhat szóköz is, 
+	tehát a  név nem minden esetben a 8. mező maga! Emellett a linkeket, mint speciális eseteket kezelni kell, 
+	hiszen a linkeknél a 8. mezőtől kezdve az utolsóig nem csak a link nevét, hanem magát a célfájl útvonalát is tartalmazza	 
+	\verb.linknev -> celfajl. formában. 
+	Segíthet a megoldásban a \pageref{stringawk}. oldalon található \textit{Szöveges függvények} alfejezet.
+
+\item Számoljuk meg hány link, hány közönséges fájl és hány könyvtár szerepel a parancs kimenetén!
+
+\item Összegezzük a fájlok méretét és vessük össze egyezik-e az eredmény azzal, amit kapunk a \texttt{du -s} paranccsal!
+
+\item Állapítsuk meg melyik a legkisebb / legnagyobb fájl (a nevét és a méretét is írjuk ki), és számoljunk átlagos fájl méretet!
+\end{enumerate}
+
+
++1 Dolgozzunk fel egy szöveges fájlt, ami egy mátrixot tárol, ahol az elemeket egy sorban pontos vessző választja el. 
+%
+%{
+%\hspace{10mm}\small
+%\begin{verbatim}
+%7747;16811;29719;13280
+%17718;5624;2746;21719
+%32436;2799;22728;16972
+%\end{verbatim}
+%}
+%
+\textit{Ötlet:} generáláshoz használjuk a bash-t és a RANDOM változó értékét! 
+%A RANDOM változóval véletlen egészt kapunk, tehát a
+%\begin{small}
+%\begin{verbatim}
+%#! /bin/bash
+%
+%for ((i=0;i<$1;i++)); do
+%    for ((j=0;j<$2-1;j++)); do
+%          echo -n $RANDOM";"
+%     done
+%     echo $RANDOM
+%done
+%\end{verbatim}
+%\end{small}
+%generál nekünk egy mátrixot, ha pozitív egészt kap parancssori paraméterként.
+
+\begin{enumerate}
+\setcounter{enumi}{4}
+\item Számoljuk sorösszeget és -átlagot minden rekordra és oszlopösszeget és -átlagot minden oszlopra. 
+\end{enumerate}

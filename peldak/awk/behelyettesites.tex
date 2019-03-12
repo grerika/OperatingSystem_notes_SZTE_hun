@@ -1,0 +1,17 @@
+\documentclass[10pt]{article}
+\usepackage{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{courier}
+\usepackage{minted}
+\renewcommand{\theFancyVerbLine}{\sffamily\scriptsize\oldstylenums{\arabic{FancyVerbLine}}}
+
+\begin{document}
+\thispagestyle{empty}
+\small
+\usemintedstyle{default}
+\usemintedstyle{bw}
+\inputminted[frame=single,label=Behelyettesites,linenos]{bash}{behelyettesites.sh}
+	
+\end{document}
+
+

@@ -1,0 +1,60 @@
+Albu Gergely dr.	+36 (62) 545-829, +36 (62) 544-000/5829	SZTE ÁOK Orvosi Informatikai Intézet	Ph.D. hallgató
+Alexin Zoltán dr.	+36 (62) 544-130, +36 (62) 544-000/4130	Szoftverfejlesztés Tanszék	adjunktus	alexin@inf.u-szeged.hu	http://www.inf.u-szeged.hu/~alexin/
+Almási László dr.	+36 (62) 545-833, +36 (62) 544-000/5833	SZTE ÁOK Orvosi Informatikai Intézet	tudományos főmunkatárs	almasi@sol.cc.u-szeged.hu
+Angyal Tamás	+36 (62) 544-306, +36 (62) 544-000/4306	SZTE TTIK Informatikai Tanszékcsoport	rendszergazda
+Árgilán Viktor	+36 (62) 546-060, +36 (62) 544-000/6060	Informatika Alkalmazásai Tanszék	tanársegéd	gilan@jgypk.u-szeged.hu
+Asztalos Tibor dr.	+36 (62) 545-832, +36 (62) 544-000/5832	SZTE ÁOK Orvosi Informatikai Intézet	tudományos főmunkatárs
+Balázs Péter dr.	+36 (62) 544-303, +36 (62) 544-000/4303	Képfeldolgozás és Számítógépes Grafika Tanszék	adjunktus	pbalazs@inf.u-szeged.hu
+Balogh János dr.	+36 (62) 544-791, +36 (62) 544-000/4791	Informatika Alkalmazásai Tanszék	adjunktus	balogh@jgypk.u-szeged.hu
+Bánhalmi András	+36 (62) 546-712, +36 (62) 544-000/6712	MTA Mesterséges Intelligencia Tanszéki Kutatócsoport	informatikus
+Bánhelyi Balázs dr.	+36 (62) 544-810, +36 (62) 544-000/4810	Számítógépes Optimalizálás Tanszék	adjunktus
+Bari Ferenc dr.	+36 (62) 546-842, +36 (62) 544-000/4842	SZTE ÁOK Orvosi Informatikai Intézet	tanszékvezető egyetemi tanár
+Barta Károly dr.	+36 (62) 544-317, +36 (62) 544-000/4317	Természeti Földrajzi és Geoinformatikai Tanszék	adjunktus	barta@earth.geo.u-szeged.hu	http://www.geo.u-szeged.hu/TEA/BK2/kara.html
+Bartalos István dr.	+36 (62) 546-483, +36 (62) 544-000/6483	Számítógépes Optimalizálás Tanszék	adjunktus	bartalos@inf.u-szeged.hu	http://www.inf.u-szeged.hu/~bartalos/
+Békési József dr.	+36 (62) 546-057, +36 (62) 544-000/6057	Informatika Alkalmazásai Tanszék	főiskolai tanár	bekesi@jgypk.u-szeged.hu
+Bella Gábor	+36 (62) 544-306, +36 (62) 544-000/4306	SZTE TTIK Informatikai Tanszékcsoport	rendszergazda	bellag@inf.u-szeged.hu
+Berend Gábor	+36 (62) 544-140, +36 (62) 544-000/4140	MTA Mesterséges Intelligencia Tanszéki Kutatócsoport	Ph.D. hallgató
+Berkiné Vlasics Margit	+36 (62) 546-080, +36 (62) 544-000/6080	Informatika Alkalmazásai Tanszék	ügyintéző	margo@jgypk.u-szeged.hu
+Beszédes Árpád dr.	+36 (62) 544-145, +36 (62) 544-000/4145	Szoftverfejlesztés Tanszék	adjunktus	beszedes@inf.u-szeged.hu
+Bilicki Vilmos dr.	+36 (62) 546-781, +36 (62) 544-000/6781	Szoftverfejlesztés Tanszék	tanársegéd	bilickiv@inf.u-szeged.hu
+Blázsik Zoltán dr.	+36 (62) 544-883, +36 (62) 544-000/4883	Számítógépes Optimalizálás Tanszék	adjunktus	blazsik@inf.u-szeged.hu
+Bohus Mihály dr.	+36 (62) 544-130, +36 (62) 544-000/4130	Szoftverfejlesztés Tanszék	adjunktus	bohus@inf.u-szeged.hu	http://www.inf.u-szeged.hu/~bohus/
+Bürgés Ágnes	+36 (62) 544-126, +36 (62) 544-000/4126	MTA Mesterséges Intelligencia Tanszéki Kutatócsoport	tudományos ügyintéző	burges@inf.u-szeged.hu
+Bürgés Éva	+36 (62) 544-126, +36 (62) 544-000/4126	MTA Mesterséges Intelligencia Tanszéki Kutatócsoport	ügyintéző
+Csallner András Erik dr.	+36 (62) 544-775, +36 (62) 544-000/4775	Informatika Alkalmazásai Tanszék	főiskolai tanár	csallner@jgypk.u-szeged.hu
+Csendes Tibor dr.	+36 (62) 544-305, +36 (62) 544-000/4305	Számítógépes Optimalizálás Tanszék	tanszékvezető egyetemi tanár	csendes@inf.u-szeged.hu	http://www.inf.u-szeged.hu/~csendes/
+Csernai Kornél	+36 (62) 546-714, +36 (62) 544-000/6714	MTA Mesterséges Intelligencia Tanszéki Kutatócsoport	egyetemi hallgató
+Csirik János dr.	+36 (62) 544-370, +36 (62) 544-000/4370	MTA Mesterséges Intelligencia Tanszéki Kutatócsoport	egyetemi tanár	csirik@inf.u-szeged.hu	http://www.inf.u-szeged.hu/~csirik/
+David P. Curley dr.	+36 (62) 343-014, +36 (62) 544-000/3014	MTA Mesterséges Intelligencia Tanszéki Kutatócsoport	lektor
+Demonstrátori szoba	+36 (62) 343-443, +36 (62) 544-000/3443	Számítástudomány Alapjai Tanszék
+Dévényi Károly dr.	+36 (62) 546-191, +36 (62) 544-000/6191	Szoftverfejlesztés Tanszék	adjunktus	devenyi@inf.u-szeged.hu	http://www.inf.u-szeged.hu/~devenyi/
+Devosa Iván	+36 (62) 546-060, +36 (62) 544-000/6060	Informatika Alkalmazásai Tanszék	tanársegéd	Devosa.Ivan@jgypk.u-szeged.hu
+Dombi József Dániel	+36 (62) 546-728, +36 (62) 544-000/6728	Szoftverfejlesztés Tanszék	programozó	dombijd@inf.u-szeged.hu
+Dombi József dr.	+36 (62) 546-194, +36 (62) 544-000/6194	Számítógépes Algoritmusok és Mesterséges Intelligencia Tanszék	egyetemi docens	dombi@inf.u-szeged.hu
+Dormány Gábor	+36 (62) 544-195, +36 (62) 544-000/4195	Természeti Földrajzi és Geoinformatikai Tanszék	tudományos munkatárs	dg@earth.geo.u-szeged.hu	http://www.geo.u-szeged.hu/PHD/phd.html
+Eller József dr.	+36 (62) 545-079, +36 (62) 544-000/5079	SZTE ÁOK Orvosi Informatikai Intézet	tudományos főmunkatárs
+Engi Erzsébet dr.	+36 (62) 546-718, +36 (62) 544-000/6718	SZTE TTIK Informatikai Tanszékcsoport	főelőadó	engi@inf.u-szeged.hu
+Erdőhelyi Balázs	+36 (62) 546-719, +36 (62) 544-000/6719	Képfeldolgozás és Számítógépes Grafika Tanszék	tanársegéd	ber@inf.u-szeged.hu
+Ésik Zoltán dr.	+36 (62) 544-289, +36 (62) 544-000/4289	Számítástudomány Alapjai Tanszék	tanszékvezető egyetemi tanár
+Fábián Tamás	+36 (62) 546-348, +36 (62) 544-000/6348	Természeti Földrajzi és Geoinformatikai Tanszék	tanszéki munkatárs	tamas@earth.geo.u-szeged.hu	http://www.geo.u-szeged.hu/MI/tamas.html
+Farkas Eszter dr.	+36 (62) 545-829, +36 (62) 544-000/5829	SZTE ÁOK Orvosi Informatikai Intézet	tudományos főmunkatárs
+Farkas Richárd dr.	+36 (62) 544-140, +36 (62) 544-000/4140	Számítógépes Algoritmusok és Mesterséges Intelligencia Tanszék	adjunktus
+Fejes Csaba	+36 (62) 544-195, +36 (62) 544-000/4195	Természeti Földrajzi és Geoinformatikai Tanszék	Ph.D. hallgató
+Fekete István	+36 (62) 546-348, +36 (62) 544-000/6348	Természeti Földrajzi és Geoinformatikai Tanszék	tanszéki munkatárs
+Feleky Gábor	+36 (62) 546-727, +36 (62) 544-000/6727	SZTE TTIK Informatikai Tanszékcsoport	tudományos ügyintéző
+Ferenc Rudolf dr.	+36 (62) 544-145, +36 (62) 544-000/4145	Szoftverfejlesztés Tanszék	adjunktus	ferenc@inf.u-szeged.hu
+Fischer Ferenc	+36 (62) 546-727, +36 (62) 544-000/6727	Szoftverfejlesztés Tanszék	Ph.D. hallgató	fischer@inf.u-szeged.hu
+Frittman Patricia	+36 (62) 546-724, +36 (62) 544-000/6724	Szoftverfejlesztés Tanszék	projekt koordinátor
+Fülöp Zoltán dr.	+36 (62) 544-302, +36 (62) 544-000/4302	Számítástudomány Alapjai Tanszék	egyetemi tanár	fulop@inf.u-szeged.hu	http://www.inf.u-szeged.hu/~fulop/
+Füvesi István dr.	+36 (62) 544-882, +36 (62) 544-000/4882	Számítógépes Algoritmusok és Mesterséges Intelligencia Tanszék	adjunktus	fuvesi@inf.u-szeged.hu
+Galambos Gábor dr.	+36 (62) 546-080, +36 (62) 544-000/6080	Informatika Alkalmazásai Tanszék	tanszékvezető egyetemi tanár	galambos@jgypk.u-szeged.hu	http://www.jgypk.u-szeged.hu/~galambos/
+Gécseg Ferenc dr.	+36 (62) 544-283, +36 (62) 544-000/4283	Számítógépes Algoritmusok és Mesterséges Intelligencia Tanszék	egyetemi tanár	gecseg@inf.u-szeged.hu	http://www.inf.u-szeged.hu/~gecseg/
+Geretovszkyné dr. Varjú Katalin dr.	+36 (62) 545-829, +36 (62) 544-000/5829	SZTE ÁOK Orvosi Fizikai és Orvosi Informatikai Intézet	tudományos munkatárs	varju@physx.u-szeged.hu
+Gergely Tamás dr.	+36 (62) 544-143, +36 (62) 544-000/4143	Szoftverfejlesztés Tanszék	tanársegéd	gertom@inf.u-szeged.hu
+Gingl Zoltán dr.	+36 (62) 544-068, +36 (62) 544-000/4068	Műszaki Informatika Tanszék	megbízott tanszékvezető egyetemi docens
+Gombás Éva dr.	+36 (62) 544-205, +36 (62) 544-000/4205	Számítástudomány Alapjai Tanszék	adjunktus	gombas@inf.u-szeged.hu
+Gosztolya Gábor dr.	+36 (62) 546-713, +36 (62) 544-000/6713	MTA Mesterséges Intelligencia Tanszéki Kutatócsoport	informatikus
+Gyimóthy Tibor dr.	+36 (62) 544-139, +36 (62) 544-000/4139	Szoftverfejlesztés Tanszék	tanszékvezető egyetemi tanár	gyimi@inf.u-szeged.hu	http://www.inf.u-szeged.hu/~gyimi/
+Gyulainé Pásztor Lenke	+36 (62) 545-833, +36 (62) 544-000/5833	SZTE ÁOK Orvosi Informatikai Intézet	programozó
+Hajagos Imre	+36 (62) 546-783, +36 (62) 544-000/6783	Szoftverfejlesztés Tanszék	szoftverfejlesztő
+Hantos Zoltán dr.	+36 (62) 545-081, +36 (62) 544-000/5081	SZTE ÁOK Orvosi Informatikai Intézet	egyetemi tanár

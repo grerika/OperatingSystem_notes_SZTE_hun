@@ -1,0 +1,22 @@
+\documentclass[10pt]{article}
+\usepackage{geometry}
+\usepackage{anysize}
+	\marginsize{20mm}{10mm}{10mm}{10mm}
+\usepackage[T1]{fontenc}
+\usepackage{courier}
+\usepackage{minted}
+\renewcommand{\theFancyVerbLine}{\sffamily\scriptsize\oldstylenums{\arabic{FancyVerbLine}}}
+
+
+\begin{document}
+\thispagestyle{empty}
+\small
+
+\usemintedstyle{bw}
+\inputminted[frame=single,linenos,label=ls awk (2)]{awk}{ls2.awk}
+
+	
+	
+\end{document}
+
+

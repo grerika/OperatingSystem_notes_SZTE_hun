@@ -1,0 +1,545 @@
+\subsection{Alapok}
+A BASH héj, mint a legtöbb héj, nemcsak egy felhasználói felület, de kifinomult, magasszintű programozási nyelvet megvalósító értelmező program (interpreter) is. A BASH ezzel a nyelvvel alkalmas a napi feladataink automatizálására, a munkakörnyezet bővítésére, testreszabására.
+\bigskip
+
+	\emph{Miért kell megismernünk?}
+	\begin{itemize}
+	\item Az összetettebb feladatokat akkor tudjuk elvégezni, ha a megfelelő vezérlő szerkezeteket ismerjük.
+	\item Az automatizálás igen fontos eleme a számítógéphasználatnak.
+	\item A Unix rendszerek felépítésében komoly szerepet kapnak a héjprogramok (glue).
+	\end{itemize}
+
+
+	\emph{Az értelmező}
+	\begin{itemize}
+	\item BASH programok szöveges állományok, amelyek futtatását rendszermag végzi
+	bash program segítségével.
+	%\item Kezdetben Unix rendszerek minden szöveges állományt \verb./bin/sh. segítségével futtattak.
+	%\item A legtöbb Linux rendszeren \verb./bin/sh. \verb./bin/bash.
+	\item Amikor elterjedten kezdtek több héjprogramot használni, szükségessé vált az
+	értelmezőprogram meg\-ha\-tá\-ro\-zá\-sa. Ha a fájl első két karaktere \verb.#!. a mag az utána 
+	 következő programnevet használja futtatásra.
+	\end{itemize}
+
+\subsubsection*{Változók}
+Mint minden parancsokra épülő programozási nyelv, a BASH nyelve is rendelkezik változókkal. BASH változókat a parancssorban is használhatunk,
+de programokban mindenképpen szükségünk van rájuk. \smallskip
+
+	\emph{A változók}
+	\begin{itemize}
+	\item névvel és értékkel rendelkező eszközök, általában szöveges érték tárolására használjuk
+	\item a hagyomány szerint nagybetűkkel írjuk a nevüket
+	\end{itemize}
+
+\subsubsection*{Az értékadás}
+\begin{verbatim}
+	változónév=kifejezés
+\end{verbatim}
+Az értékadás baloldalán egy változó neve, jobboldalán egy kifejezés áll. Az értékadás hatására a változó értéke felveszi a kifejezés
+értékét. Az egyenlőségjel bal és jobb oldalán nem lehet szóköz!
+\bigskip
+
+%\emph{Példa}
+\begin{lstlisting}
+#!/bin/bash
+
+KONYVTAR=tmp
+SZOVEG="hello vilag"
+\end{lstlisting}
+
+Ha a szöveges értékben szóköz szerepel, a szöveget kettős idéző jelek (") közé kell zárnunk. Ha ezt nem tesszük meg, a BASH a szóközök mentén szétválasztja a szöveget és listaként kezeli.
+
+
+\subsubsection*{Behelyettesítés}
+\begin{verbatim}
+...$változónév...
+\end{verbatim}
+A változóbehelyettesítés használatakor a változónév elé egy \$ karaktert írunk. Az adott helyre a BASH a változó értékét helyettesíti be.
+
+%\emph{Példa}
+\begin{lstlisting}
+#!/bin/bash
+
+KVT=tmp
+ALKVT=elso
+ALALKVT=masodik
+mkdir -p $KVT/$ALKVT/$ALALKVT
+\end{lstlisting}
+
+\begin{description}
+\item[\tt\$VALTOZO] A megadott nevű környezeti változó aktuális értékének behelyettesítése. Ha a változó nem létezik, üres szót kapunk.
+\item[\tt\$\{VALTOZO\}] Hatása megegyezik az előzővel, de ez akkor is használható, ha közvetlenül a kifejezés után betű, számjegy vagy aláhúzásjel 
+	áll (máskülönben azt a név részének tekintené a shell).
+\item[\tt\$\{VALTOZO:+ERTEK\}]  \emph{alternatív érték használata} \hfill
+
+	Ha a VALTOZO üres (nulla hosszúságú) vagy nem kapott még értéket, akkor nem történik semmi, különben az ERTEK-kel helyettesitődik a fenti kifejezés.
+
+\item[\tt\$\{VALTOZO:-ERTEK\}] \emph{alapértelmezett érték használata}\hfill
+	
+	Ha \verb.VALTOZO. üres, a kifejezést \verb.ERTEK.kel helyettesíti. Különben a kifejezés értéke \verb.$VALTOZO. 
+	A \verb.VALTOZO. értéke változatlan marad.
+
+\item[\tt\$\{VALTOZO:=ERTEK\}] \emph{alapértelmezett érték hozzárendelése}\hfill
+	
+	Ha \verb.VALTOZO. üres, a változó értékét \verb.ERTEK.re állítja. 
+
+\item[\tt\$\{!VALT\}] \emph{indirekció}\hfill
+
+	A \verb.$VALT. változónevű változó értékét kéri le, tehát a \verb.!VALT. helyére  a \verb.VALT. értéke kerül.
+
+\begin{lstlisting}
+#!/bin/bash
+
+STR="A"
+A="Hello"
+echo "${!STR}"
+echo "$A"
+\end{lstlisting}
+
+\item[\tt\$\{VALTOZO:?UZENET\}] Ha a \verb.VALTOZO.nak nincs értéke, akkor megszakad a futás az \verb.UZENET.ben 
+    megadott szöveg kiírása után
+\end{description}
+
+Futtassuk a \texttt{scriptek/bash/default.sh} szkriptet!\footnote{Megtalálható kitömörítés után a \url{http://www.inf.u-szeged.hu/~grerika/teaching/os/scriptek.tar.gz} fájlban, kitömörítéshez segítség a \pageref{subsec:archiv}. oldalon}
+
+
+%A programindítása előtt a BASH változók értékét behelyettesíti a megfelelő helyekre és a behelyettesítéssel kapott értékekkel indítja a programot.
+
+%\begin{lstlisting}
+%#!/bin/bash
+%NEV=Gizi
+%echo Nev: $NEV
+%\end{lstlisting}
+
+%Az \texttt{echo} parancs egyszerűen kiírja az összes paraméterét a szabványoskimenetre. A kiírt listában a paramétereket egy szóköz választja el.
+
+\subsubsection*{Érték beolvasása}
+\begin{verbatim}
+     read változónév
+\end{verbatim}
+A read utasítás a felhasználó által írt szöveget helyezi el az utána írt változóban. A felhasználó a szöveg beírása közben használhatja a szerkesztő billentyűket és a szövegben tetszőleges karaktereket elhelyezhet.
+
+
+\begin{lstlisting}
+#! /bin/bash
+read KVT
+mkdir "$KVT"
+\end{lstlisting}
+Az idézőjelek (") miatt a parancs akkor is egy paramétert kap, ha a felhasználó által beírt szövegben szóköz van.
+
+
+
+
+
+
+\subsubsection*{Idézőjelek hatása}
+A \emph{kettős idézőjelek} (\verb.". [\Alt+\ 2]) részleges elszigetelést jelölnek, ami azt jelenti, hogy a héj értelmezi és behelyettesíti a benne található, számára értelmes karaktereket. Ha például egy * karaktert talál, akkor azt a munkakönyvtárban levő fájlok neveinek listájával fogja helyettesíteni. Ha \verb.$. karaktert ,,lát'', a közvetlenül utána következő szót változónévnek vagy parancssori paraméternek fogja tekinteni és a megfelelő értéket behelyettesíti.
+
+A \emph{szimpla (egyszeres) idézőjelek} (\verb.'. [\Alt+\ 1]) használata teljes elzárást jelent. Az ilyen karakterláncokban a héj semmiféle értelmezést nem végez, azok tartalmát betű szerint kezeli.
+
+
+A \emph{visszafelé hajló} (\texttt{`} [\Alt+\ 7]) idézőjelek kifejezetten parancsvégrehajtást jelölnek. Az ilyen szöveget a héj parancssornak tekinti, végrehajtja és az eredménnyel helyettesíti. Ez a parancsbehelyettesítésnek nevezett eljárás lehetővé teszi, hogy egy változónak azonnal átadjuk egy esetleg meglehetősen bonyolult parancssor kimenetét. 
+\begin{table}[!h]
+\begin{center}
+\small
+\begin{tabular}{|c|l|}
+\hline
+\verb@"..."@		&	változó behelyettesítés van\\
+\verb@'...'@		&	változó behelyettesítés nincs\\
+\verb@'"..."'@		& 	a \verb.". jelek elvesztik különleges jelentésüket\\
+\verb@"'...'"@		&	a \verb.'. jelek elvesztik különleges jelentésüket\\
+\verb@`...`@		& 	A közrezárt szöveg végrehajtásra kerül\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Idézőjelek fajtái és használatuk} \label{table:quote}
+\end{table}
+
+%Futtassuk az alábbi szkriptet!
+
+\begin{lstlisting}[title=scriptek/bash/behelyettesites.sh]
+! /bin/bash
+#NEV=Gizi
+echo -n "Kerek egy nevet: "
+read NEV
+echo Nev: $NEV
+echo "Nev: $NEV"
+echo 'Nev: $NEV'
+echo "Nev: '$NEV'"
+echo '"Nev: $NEV"'
+\end{lstlisting}
+
+\emph{Eredmény (Ha a NEV értéke Gizi)}
+\begin{lstlisting}
+Nev: Gizi
+Nev: Gizi
+Nev: $NEV
+Nev: 'Gizi'
+"Nev: $NEV"
+\end{lstlisting}
+
+
+
+\subsubsection*{A beágyazott utasítás}\label{beagyazott}
+\begin{lstlisting}
+...$(utasitas)...
+\end{lstlisting}
+Beágyazott utasítást bárhová elhelyezhetünk, ahol változó értékét behelyettesíthetjük. A
+beágyazott utasítás is behelyettesítés. A BASH a \verb@$()@ kifejezésen belül található 
+utasítást parancsként (programként) végrehajtja. A kifejezés behelyettesítési értéke a 
+program szabványos kimenetén megjelenő lista lesz.
+%
+A beágyazott utasítás egy formája a visszafele hajló idézőjel, lásd a(z) \ref{table:quote}.~táblázatot 
+(\pageref{table:quote}.~oldal). Tehát a(z) \verb.$(utasitas). ekvivalens a(z) \verb.`utasitas`.-al.
+
+
+
+\subsection{A környezeti változók}
+
+A környezeti változók névvel és értékkel rendelkező eszközök, amelyek nevüket onnan kapták, hogy a munkakörnyezetet írják le a programok számára. Minden folyamat rendelkezik környezeti változókkal, nemcsak a BASH, nem csak a héjprogramok. 
+(Ahogyan minden folyamat rendelkezik munkakönyvtárral is!)
+%\smallskip
+
+
+\begin{table}[!h]
+\centering\small
+ \begin{tabular}{|ll|}
+\hline
+  \tt\$BASH	& A futtató bináris állomány
+  \\
+  \tt\$HOME	& A felhasználó saját könyvtára
+  \\
+  \tt\$USER	& Felhasználó login neve
+  \\
+\tt\$USERNAME	& A felhasználó teljes neve
+  \\
+  \tt\$HOSTNAME	& A gép neve
+  \\
+\tt\$PWD		& Aktuális könyvtár
+  \\
+  \tt\$PATH	& A parancsok keresési útja
+  \\
+  \tt\$COLUMNS	& Betűoszlopok száma a képernyőn
+  \\
+\tt\$LINES		& Sorok száma  képernyőn
+  \\
+\tt\$TERM		& Terminál típusa
+  \\
+\tt\$EDITOR	& Alapértelmezés szerinti szövegszerkesztő
+  \\
+\hline
+ \end{tabular}
+\caption{Fontosabb környezeti változók}
+\end{table}
+\clearpage
+
+A környezeti változók kezelése egyirányú:
+\begin{itemize}
+\item A szülőfolyamat meghatározza a gyermekfolyamat környezeti változóit, de a
+gyermek nem változtathatja meg a szülő környezeti változóit.
+\item  Amikor egy folyamat egy másik folyamatot indít, másolat készül a környezeti
+változóiról.
+\item A folyamat futása közben használhatja, megváltoztathatja a környezeti változóit.
+\item A folyamat futása közben újabb környezeti változókat hozhat létre.
+\item Amikor egy folyamat befejeződik, a környezeti változói megsemmisülnek.
+\end{itemize}
+
+
+
+\subsubsection*{A környezeti változók használata}
+
+A BASH programban a környezeti változó értékét ugyanúgy helyettesíthetjük be, mint a BASH saját változót.
+\begin{lstlisting}
+#!/bin/bash
+
+echo $USER@$HOSTNAME
+\end{lstlisting}
+Ezeket a változókat a BASH program a szülőfolyamattól örökölte.
+
+
+\subsubsection*{A környezeti változó megváltoztatása}
+Ha megváltoztatjuk egy környezeti változó értékét, az utána indított programok már az új értékét kapják meg. (A BASH változók értékét azonban nem kapják meg az indított programok.)
+
+\begin{lstlisting}
+#!/bin/bash
+
+USER=gizi
+firefox
+\end{lstlisting}
+
+Ha a környezeti változó létezett, az új értéket kapják meg a gyermekfolyamatok; 
+  ha nem, akkor csak egy BASH változót hoztunk létre.
+
+\subsubsection*{Környezeti változó létrehozása}
+Környezeti változót a BASH változóból, az \texttt{export} parancs segítségével hozhatunk létre.
+\begin{lstlisting}
+#!/bin/bash
+IZE="mintamokus"
+export IZE
+\end{lstlisting}
+
+Az \texttt{export} parancs kiadása után több változónevét is írhatjuk, mindegyikből környezeti változó lesz. Az egyszerűsített írásmód esetén az értékadást és az \texttt{export} kulcsszót egy sorban helyezzük el. Az export parancs kiadása után több értékadást is írhatuk, mindegyik környezeti változót hoz létre.
+\begin{lstlisting} 
+#!/bin/bash
+export IZE="mintamokus"
+\end{lstlisting}
+
+
+
+
+\subsection{Parancssori paraméterek}
+A héjprogramok meghívásakor átadhatunk egy vagy több paramétert. Több paraméter esetén azokat egy vagy több szóköznek  kell elválasztania. Ha az átadandó paraméter maga is tartalmaz szóközt, kettős idézőjelbe kell tenni. 
+%
+A parancssori paraméterek értékére a \verb.$1,$2.,\dots szimbólumokkal hivatkozhatunk. A szám a kérdéses paraméter sorszáma. A 0 sorszámú paraméter minden esetben maga a meghívott program neve. 
+\begin{table}[h!]
+\begin{center}
+\small
+\begin{tabular}{|cl|}
+\hline
+\verb.$#.	& A parancssori paraméterek száma\\
+\verb.$?.	& A legutoljára végrehajtott parancs visszatérési értéke\\
+\verb.$$.	& A futó program folyamatazonosítója\\
+\verb.$n.	& Az $n$-edik parancssori paraméter értéke\\
+\verb.$0.	& A pillanatnyi héjprogram neve\\
+\verb.$*.	& Valamennyi parancssori paraméter egyben, egyetlen karakterláncként (\verb@"$1 $2 ... $9 ..."@)\\
+\verb.$@.	& Valamennyi parancssori paraméter egyben, egyenként idézőjelbe téve (\verb@"$1" "$2" ... "$9" ...@)\\
+\hline
+\end{tabular}
+\end{center}
+\caption{A héj névvel nem rendelkező belső változói}
+\end{table}
+
+\subsection{Matematikai kifejezések}
+
+Számos esetben szükségünk lehet egyszerű matematikai műveletekre a héjprogramozás során. 
+
+
+Az \texttt{expr} egy négy alapműveletes számológép, de kizárólag egész számokkal képes műveleteket végezni. 
+\begin{table}[h!]
+\centering\small
+\begin{tabular}{|ll|}
+\hline
+\verb.|.	& Logikai VAGY operátor. Visszatérési értéke az első paraméter, \\
+		& ha az nem nulla vagy nem üres karakterlánc, egyébként a második.
+\\
+\hline
+\verb.&.	& Logikai ÉS operátor. Visszatérési értéke az első paraméter, \\
+		& ha egyik argumentuma sem nulla vagy üres karakterlánc. 
+			Ellenkező esetben nullát ad vissza.\\
+\hline
+\end{tabular}
+\caption{Az \texttt{expr} logikai operátorai}
+\end{table}
+
+
+\begin{table}[h!]
+\centering\small
+\begin{tabular}{|ll|}
+\hline
+\tt<	& Kisebb\\
+\tt<=	& Kisebb vagy egyenlő\\
+\tt> 	& Nagyobb\\
+\tt>=	& Nagyobb vagy egyenlő\\
+\tt=, ==	& Egyenlő\\
+\tt!=	& Nem egyenlő\\
+\hline
+\end{tabular}
+\caption{Az \texttt{expr} által ismert relációs jelek} \label{table:rel2}
+\end{table}
+
+
+\begin{table}[h!]
+\centering\small
+\begin{tabular}{|cl|}
+\hline
+\verb.+.	& Összeadás\\
+\verb.-.	& Kivonás\\
+\verb.*.	& Szorzás\\
+\verb./.	& Osztás\\
+\verb.%.	& Maradékképzés\\
+\hline
+\end{tabular}
+\caption{Az \texttt{expr} műveletei} \label{table:rel}
+\end{table}
+
+A relációs jelek (\ref{table:rel}. táblázat) használatakor az \texttt{expr} 1-et ad vissza, ha az összehasonlítás igaz, nullát ha hamis. Az összehasonlítás elvégzése előtt megkísérli számokká alakítani a megadott paramétereket. Ha ez sikeres, aritmetikai összehasonlítást végez. Ha bármelyik paramétert nem képes átalakítani, akkor az összehasonlítás betűrend szerinti (lexikografikus) lesz. Ilyenkor az a paraméter számít nagyobbnak, amelyikben előbb következik magasabb ASCII kódú karakter.
+
+Aritmetikai műveletek csak számokon hajthatóak végre, így ha valamelyik paraméter nem alakítható számmá, hiba keletkezik. 
+
+\emph{Buktató:} ügyeljünk arra, hogy az \texttt{expr} az egyszerű műveleti jeleket is csak akkor hajlandó értelmezni, ha azokat szóközök választják el a tényezőktól. Így a 
+\verb.SZAM=`expr 3+2`.
+forma például helytelen. A helyes írásmód:
+\begin{verbatim}
+SZAM=`expr 3 + 2`
+\end{verbatim}
+
+Arra is figyelni kell, hogy az \texttt{expr} egyes műveletei a héj számára is értelmesek és ha elfelejtjük 
+levédeni ezeket a \verb.\. karakterrel, furcsa mellékhatásokat tapasztalhatunk. 
+
+\subsubsection*{Példa az expr használatára}
+\texttt{scriptek/matematika/expr.sh}
+%\bigskip
+
+Nem csak az \texttt{expr} használható matematikai műveletek elvégzésére, hanem a \texttt{let} parancs is.
+%\bigskip
+
+\begin{lstlisting}[title=Példa let használatára (scriptek/matematika/let.sh)]
+#! /bin/bash
+COUNTER=10
+echo "$COUNTER"
+
+let COUNTER-=1
+echo "$COUNTER"
+
+let COUNTER=COUNTER-1
+echo "$COUNTER"
+
+
+echo "$((COUNTER-=1))"
+echo "$((COUNTER=COUNTER-1))"
+
+echo "$[COUNTER-=1]"
+echo "$[COUNTER=COUNTER-1]"
+\end{lstlisting}
+
+
+
+\subsection{for}
+
+\begin{minipage}{0.4\textwidth}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}
+for valtozo in lista; do
+	utasitasblokk
+done
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\textwidth}\lstset{linewidth=\textwidth}
+\begin{lstlisting}
+for valtozo in lista
+do
+	utasitasblokk
+done
+\end{lstlisting}
+\end{minipage}
+
+
+A változó rendre felveszi a lista elemeinek értékét és minden értékkel végrehajtódik az
+utasítás blokk minden utasítása.\smallskip
+
+\emph{A változó lehet:}
+\begin{itemize}
+\item BASH változó neve, vagy
+\item Környezeti változó neve.
+\end{itemize}
+
+A változó neve elé nem kell \$ jelet írnunk!  Az utasításblokk tetszőlegesen sok utasításból állhat, 
+amelyekben használhatjuk a változó értékét. A változó neve elé ilyenkor \$ jelet kell írnunk.
+\smallskip
+
+\emph{A lista lehet:}
+\begin{itemize}
+\item Szavak szóközökkel elválasztott listája, vagy
+\item Állománynév helyettesítő karakterekkel megadott állománylista, vagy
+\item változók listája, vagy
+\item végrehajtandó parancs a \verb@$(...)@  vagy \verb@`...`@ szerkezettel.
+\end{itemize}
+A listát lezárja:
+\begin{itemize}
+\item a pontosvessző, vagy
+\item az újsor karakter.
+\end{itemize}
+
+
+\begin{lstlisting}
+#!/bin/bash
+
+for DAY in hetfo kedd szerda; do
+  echo $DAY
+  mkdir $DAY
+done
+\end{lstlisting}
+% A for ciklus példa 2 - for/pelda-2.sh
+\begin{lstlisting}
+#!/bin/bash
+
+for FILE in *.dvi; do
+  echo "Nyomtatas: $FILE"
+  dvips $FILE
+done
+\end{lstlisting}
+
+\begin{lstlisting}
+#!/bin/bash
+
+MENTENI="$HOME/bin $HOME/munka"
+for KONYVTAR in $MENTENI;do
+  echo "Mentes: $KONYVTAR"
+  cp -r $KONYVTAR /mnt/pendrive
+done
+\end{lstlisting}
+
+\begin{lstlisting}
+#!/bin/bash
+
+for ORA in $(seq 1 24);do
+  echo "Letrehoz: $ORA"
+  mkdir /mnt/pendrive/$ORA
+done
+\end{lstlisting}
+
+Beágyazott utasítást (lásd \pageref{beagyazott}. oldal) és for ciklust hatékonyan használhatunk együtt. 
+A ciklus egyenként végigjárja az utasítás kimenetén megjelenő listát.
+\begin{lstlisting}
+#!/bin/bash
+
+for F in $(ls -l | grep ^d | awk '{print $9}'); do
+  echo "$F archivalasa"
+  tar -czf $F.tar.gz $F
+done
+\end{lstlisting}
+
+Beágyazott utasítás segítségével változók értékét is beállíthatjuk:
+\begin{lstlisting}
+#!/bin/bash
+
+for F in *; do
+  KISBETUS=$(echo $F | tr A-Z a-z)
+  mv $F $KISBETUS
+done
+\end{lstlisting}
+
+\subsubsection*{Egymásba ágyazott for ciklusok}
+\begin{lstlisting}
+for valtozo1 in lista1; do
+  for valtozo2 in lista2; do
+    utasitasblokk
+  done
+done
+\end{lstlisting}\bigskip
+
+\begin{lstlisting}
+#!/bin/bash
+
+for EMAIL in $(cat ~/cimek); do
+    echo -n "Kuldes $EMAIL cimre:"
+    for FILE in ~/LEVELEK/*.xt; do
+        echo -n "$FILE"
+        mail $EMAIL <$FILE
+    done
+    echo "[OK]"
+done
+\end{lstlisting}
+
+
+
+
+\subsection*{Gyakorlásképp}
+\begin{enumerate}
+\item Írj szkriptet, mely beolvas egy szöveget, eltárolja azt, majd kiírja a konzolra.
+\item Írj szkriptet, mely kiírja a paraméterként kapott fájlok típusát és tartalmát.
+\end{enumerate}
+
+
+

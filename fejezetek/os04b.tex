@@ -1,0 +1,525 @@
+\subsection{if}
+
+\begin{minipage}{0.425\textwidth}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}
+if utasitas; then
+    utasitasblokk
+fi
+\end{lstlisting}
+\end{minipage}
+\hspace{1em}
+\begin{minipage}{0.425\textwidth}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}
+if utasitas
+then
+    utasitasblokk
+fi
+\end{lstlisting}
+\end{minipage}
+
+
+\noindent 
+A BASH végrehajtja az utasítást és ha igaz (0 a visszatérési értéke), 
+  lefuttatja az utasításblokk utasításait is.
+\begin{lstlisting}
+if utasitas; then
+    utasitasblokk1
+else
+    utasitasblokk2
+fi
+\end{lstlisting}
+
+\noindent
+A BASH az utasítást végrehajtja: Ha igaz, az igaz ág, ha hamis (nem 0),
+a hamis ág utasításait hajtja végre.\medskip
+
+A feltételként szereplő utasítást pontos vessző, vagy újsor karakter zárja le.\bigskip
+
+\emph{Példa}
+\begin{lstlisting}
+#! /bin/bash
+
+if mount /mnt/floppy; then
+    echo "Beillesztes megtortent."
+else
+    echo "Beillesztes sikertelen."
+fi
+\end{lstlisting}
+
+\subsection{Logikai műveletek}
+Programok visszatérési értékein használhatjuk az alábbi logikai operátorokat.
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{|cl|}
+\hline
+\tt!	& tagadás(prefix)\\
+\tt|| 	& logikai vagy(infix)\\
+\tt\&\&	& logikai és(infix)\\
+\hline
+\end{tabular}
+\caption{Logikai műveletek}
+\end{table}
+
+
+\bigskip
+\begin{minipage}{0.425\textwidth}
+
+\subsubsection*{Tagadás}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}
+#! /bin/bash
+
+if ! mkdir $HOME/tmp2; then
+  echo "Nem sikerult letrehozni."
+fi
+\end{lstlisting}
+\end{minipage}
+\hspace{1em}
+\begin{minipage}{0.425\textwidth}
+\lstset{linewidth=\textwidth}
+\subsubsection*{ÉS}
+\begin{lstlisting}
+#! /bin/bash
+
+if mkdir tmp && cp ak tmp; then
+    echo "Sikerult!"
+fi
+\end{lstlisting}
+\end{minipage}
+\subsubsection*{VAGY}
+\begin{lstlisting}
+#! /bin/bash
+
+if mkdir tmp || mkdir tmp2; then
+    echo "Legalabb egyik konyvtar letrejott!"
+fi
+\end{lstlisting}
+
+\noindent Utasításokból logikai operátorok segítségével képzett kifejezések szintén utasítások, de elsőre úgy tűnhet, hogy talán kissé különösen viselkednek.
+\vfill\pagebreak
+
+\subsubsection*{Lusta kiértékelés mellékhatásai}
+Az alábbi esetben, ha az első utasítás értéke hamis, az ÉS művelet miatt a végeredmény mindenképp hamis lesz, felesleges tehát futtatni a második utasítást!
+\begin{lstlisting}
+      utasitas1 && utasitas2
+\end{lstlisting}
+
+
+\noindent Az alábbi esetben pedig ha az első utasítás értéke igaz, a VAGY művelet miatt a végeredmény mindenképp igaz lesz, felesleges tehát futtatni a második utasítást!
+\begin{lstlisting}
+      utasitas1 || utasitas2
+\end{lstlisting}
+
+
+\emph{Példa}
+\begin{lstlisting}
+#!/bin/bash
+
+ls -ld ak || echo "Nem erheto el!"
+\end{lstlisting}
+Az ilyen szerkezetek úgy működnek, mint az if szerkezet: a második utasítás végrehajtása az 
+első eredményétől függően következik be.
+
+\subsection{Logikai állandók}
+Logikai állandót a \verb.true. és \verb.false. programok segítségével használhatunk a BASH-ban.
+\begin{description}
+\item[true] A program nem csinál semmit, visszatérési értéke igaz.
+\item[false] A program nem csinál semmit, visszatérési értéke hamis.
+\end{description}
+
+
+\subsection{A test program}
+Az aritmetikai relációk kiértékelésére és az állományvizsgálatra általában a \texttt{test} parancsot használjuk.
+
+\begin{minipage}{0.42\textwidth}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}[rulecolor=\color{red},rulesepcolor=\color{red}]
+ #!/bin/bash
+
+if 8<9;then
+    echo "Nyolc kisebb, mint kilenc."
+fi
+\end{lstlisting}
+\end{minipage}
+\hspace{1em}
+%\hfill
+\begin{minipage}{0.42\textwidth}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}[rulecolor=\color{red},rulesepcolor=\color{red}]
+#!/bin/bash
+
+if 8 < 9;then
+    echo "Nyolc kisebb, mint kilenc."
+fi
+\end{lstlisting}
+\end{minipage}
+
+\noindent{\color{red}\textbf{Nagyon rossz!}} Ez azt jelenti, hogy a 8 nevű program szabványos bemenetére irányítsuk a 9 nevű állományt!
+\bigskip
+
+\subsubsection*{Helyesen}
+
+\begin{lstlisting}[rulecolor=\color{green},rulesepcolor=\color{green}]
+ #!/bin/bash
+
+if test 8 -lt 9; then
+    echo "Nyolc kisebb, mint kilenc."
+fi
+\end{lstlisting}
+
+\subsubsection*{A test kettős viselkedése}
+
+\begin{minipage}{0.425\textwidth}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}
+#! /bin/bash
+
+if test 8 -lt 9; then
+    echo "Nyolc kisebb, mint kilenc."
+fi
+\end{lstlisting}
+\end{minipage}
+\hspace{1em}
+\begin{minipage}{0.425\textwidth}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}
+#! /bin/bash
+
+if [ 8 -lt 9 ]
+then echo "Nyolc kisebb, mint kilenc."
+fi
+\end{lstlisting}
+\end{minipage}
+
+\noindent FONTOS: a jobb oldali szintakszis esetén, a \verb.[. után illetve a \verb.]. előtt mindenképp használnunk kell szóközöket!
+
+
+
+\subsubsection*{Fájlvizsgálat}
+\begin{lstlisting}
+#!/bin/bash
+if [ ! -d $HOME/bin ]; then
+    mkdir $HOME/bin
+fi 
+\end{lstlisting}
+
+
+\subsubsection*{Karakterlánc példa}
+\begin{lstlisting}
+#!/bin/bash
+
+echo -n "Konyvtarnev [bin]:"
+read KVT
+if [ -z "$KVT" ];then
+    KVT=bin
+fi
+\end{lstlisting}
+\emph{Megjegyzés:} ha a felhasználó nem ad meg karakterláncot és az idézőjeleket nem használjuk, akkor innen
+hiányzik a paraméter!
+
+
+% \subsubsection*{Fájlvizsgálat}
+\begin{table}[!h]
+\centering
+ \begin{tabular}{|ll|}
+          \hline
+\tt -b fájlnév	& blokkeszköz-meghajtó
+\\
+\tt -c fájlnév	& karaktereszköz-meghajtó
+\\
+\tt -d fájlnév	& könyvtár
+\\
+\tt -f fájlnév	& szabályos állomány
+\\
+\tt -L fájlnév	& közvetett hivatkozás
+\\
+\tt -p fájlnév	& csővezeték
+\\
+\tt -e fájlnév	& létezik
+\\
+\tt -G fájlnév	& saját csoportba tartozik
+\\
+\tt -O fájlnév	& saját tulajdon
+\\	
+\tt -r fájlnév	& olvasható
+\\
+\tt -w fájlnév	& írható
+\\
+\tt -x fájlnév	& futtatható
+\\
+\tt -s fájlnév	& nem üres
+\\
+\hline
+\tt fájl1 -nt fájl2	& a fájl1 újabb, mint a fájl2
+\\
+\tt fájl1 -ot fájl2	& a fájl1 régebbi, mint a fájl2
+\\
+\tt fájl1 -ef fájl2	& a fájl1 és fájl2 azonos állományt jelöl
+\\
+\hline
+  \end{tabular}
+\caption{Fájlvizsgálat a test paranccsal}
+% \end{table}
+\medskip
+ %\begin{table}[!ht]
+\centering
+ \begin{tabular}{|ll|}
+          \hline
+\tt Kif1 -eq Kif2	& Egyenlő
+\\
+\tt Kif1 -ne Kif 2	& Nem egyenlő
+\\
+\tt Kif1 -lt Kif2	& Kisebb
+\\
+\tt Kif1 -le Kif2	& Kisebb vagy egyenlő
+\\
+\tt Kif1 -gt Kif2	& Nagyobb
+\\
+\tt Kif1 -ge Kif2	& Nagyobb vagy egyenlő
+\\
+\hline
+\tt Kif1 -a Kif2	& Logikai és
+\\
+\tt Kif1 -o Kif2	& Logikai vagy
+\\
+\tt !Kif		& Logikai tagadás
+\\
+\hline
+  \end{tabular}
+\caption{Numerikus és logikai operátorok}
+% \end{table}
+\medskip
+% \begin{table}
+\centering
+ \begin{tabular}{|ll|}
+          \hline
+\tt -z String		& 0 hosszúságú
+\\
+\tt String			& nem 0 hosszúságú
+\\
+\tt String != String	& nem egyenlők
+\\
+\tt String = String		& egyenlők
+\\
+\hline
+  \end{tabular}
+\caption{Numerikus és logikai operátorok}
+\end{table}
+
+\vfill\pagebreak
+
+\subsection{while}
+
+\begin{lstlisting}
+while utasitas; do
+    utasitasblokk
+done
+\end{lstlisting}
+
+Amíg a for szerkezet esetében lehetetlen volt, addig a while szerkezet esetében lehetséges az
+utasítások végtelen ismétlése, a végtelen ciklus. A végtelen ciklusba került programot a
+\Ctrl+\ c billentyűkombinációval vagy a kill programmal szakíthatjuk meg.\bigskip
+
+
+\begin{lstlisting}
+#! /bin/bash
+while true; do
+    echo "Futok..."
+    sleep 3
+done
+\end{lstlisting}
+A \texttt{sleep} parancs felfüggeszti a program futását a paramétere által megadott másodpercre.
+
+
+
+\begin{lstlisting}
+#!/bin/bash
+SZOVEG="You have a new message."
+while [ ! -s "$MAIL" ]; do
+    sleep 3
+done
+echo $SZOVEG
+play /usr/share/sounds/email.wav
+echo $SZOVEG | festival --tts
+\end{lstlisting}
+
+Végtelen ciklus segítségével
+\begin{lstlisting}
+#!/bin/bash
+SZOVEG="You have a new message."
+while true;do
+    while [ ! -s "$MAIL" ];do
+         sleep 3
+    done
+    echo $SZOVEG
+    play /usr/share/sounds/email.wav
+    echo $SZOVEG | festival --tts
+    while [ -s "$MAIL" ];do
+         sleep 3
+    done
+done
+\end{lstlisting}
+
+
+\subsection{do-until}
+\begin{lstlisting}
+until utasitas; do	
+    utasitasblokk
+done
+\end{lstlisting}
+
+Az until szerkezet addig ismétli az utasításblokkot, amíg az utasítás visszatérési értéke hamis. 
+Az until tehát while szerkezethez képest a feltételként adott utasítás értelmét az ellentettjére változtatja.
+
+\vfill\pagebreak
+\subsection{case}
+ \begin{lstlisting}
+case szo in
+    minta1a|minta1b)
+          utasitasblokk1;;
+    minta2)
+          utasitasblokk2;;
+    *) utasitasblokk0
+esac
+ \end{lstlisting}
+
+A case szerkezet illeszti a szót a megadott mintákra, majd azt az utasításblokkot hajtja végre,
+amelyik az illeszkedő minták közül az elsőhöz tartozik. A case a minták kezelésénél az
+állománynévhelyettesítőkarakterek kezelésének szabályait használja.
+\bigskip
+
+\emph{Példák}
+
+\begin{minipage}{0.425\textwidth}
+Példa: \texttt{scriptek/bash/case.sh}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}
+ #!/bin/bash
+
+read K
+
+case $K in
+    *.jpeg)
+        mv $K $(basename $Kjpeg)jpg;;
+    *.gif)
+        convert $K $(basename $Kgif)jpg
+esac
+\end{lstlisting}
+\end{minipage}
+\hspace{1em}
+\begin{minipage}{0.425\textwidth}
+\lstset{linewidth=\textwidth}
+\begin{lstlisting}
+ #!/bin/bash
+
+# Peldaprogram a BASH verziojanak megallapitasara
+# Forras: 
+# http://conectiva.com.br/~aurelio/programas/bash/txt2regex
+
+
+case "$BASH_VERSION" in
+     4.0[4-9]*|4.[1-9]*): ;;
+     *)echo "bash version >=4.04 required..."; exit 1 ;;
+esac
+\end{lstlisting}
+\end{minipage}
+
+
+\subsection{Vágókifejezések}
+\emph{A vágókifejezések nem kötelező anyagrész, de hasznos eszközök bash programozáskor.}
+
+%\begin{table}[!h]
+\begin{center}
+ \begin{tabular}{|ll|}
+\hline
+\verb.${STRING#minta}.	& Ha a minta illeszkedik a string elejére, \\
+			&  akkor levágásra kerül a legrövidebb illeszkedő rész
+\\
+\hline
+\verb.${STRING##minta}.	& Ha a minta illeszkedik a string elejére, \\
+			&  akkor levágásra kerül a leghosszabb illeszkedő rész
+\\
+\hline
+\verb.${STRING%minta}. 	& Ha a minta illeszkedik a string végére, \\
+			&  akkor levágásra kerül a legrövidebb illeszkedő rész
+\\
+\hline
+\verb.${STRING%%minta}.	&Ha a minta illeszkedik a string végére,\\
+			&	akkor levágásra kerül a leghosszabb illeszkedő rész
+\\
+\hline  
+ \end{tabular}
+%\caption{BASH vágókifejezések}
+\end{center}
+%\end{table}
+\begin{lstlisting}[title=scriptek/bash/vago.sh]
+#! /bin/bash
+# Forras: Pere Laszlo, Linux felhasznaloi ismeretek I.
+# PARAMETEREK SZAMANAK ELLENORZESE
+if [ $# -ne 2 ]; then
+	echo "`basename $0` - Allomany kiterjesztesenek csereje"
+	echo "Hasznalat:"
+	echo "		`basename $0` <regi kit> <uj kit>"
+	exit 1
+fi
+# TENYLEGES MUNKA
+for FILES in *.$1; do
+	echo -n "$FILES -> ${FILES%$1}$2"
+	if [ -e "${FILES%$1}$2" ]; then		
+		echo " Hiba: A ${FILES%$1}$2 mar letezik"
+	else
+		echo
+		mv $FILES ${FILES%$1}$2
+	fi
+done
+\end{lstlisting}
+
+
+\subsection{Függvények}
+
+\begin{lstlisting}
+#! /bin/bash
+
+function fuggvenynev(){
+  utasitas1
+  ...
+}
+
+fuggvenynev [parameterek] # hasznalat
+\end{lstlisting}
+
+A függvények paramétereire -- hasonlóan a héjprogramokhoz -- a \verb@$1, $2, ... @ kifejezésekkel hivat\-koz\-ha\-tunk.
+A függvények hozzáférnek valamennyi a főprogramban meghatározott változóhoz és maguk is lét\-re\-hoz\-hat\-nak újakat. 
+Ez utóbbiakat a főprogram is látni fogja, azok nem lokálisak a függvényre nézve. 
+
+
+\subsubsection*{Lokális változók, rekurzió}
+Függvényekben létrehozhatunk lokális változókat is, a \texttt{local} kulcsszó segítségével.
+
+%Például:
+
+
+\begin{lstlisting}
+#! /bin/bash
+
+function faktorialis ()
+{
+    local n=$1;
+
+    if [ $n = 0 ]; then
+        echo 1
+        return ;
+    fi;
+
+    echo $(( $n * $(faktorialis $(( $n - 1 )) ) ))
+}
+
+for n in $(seq 1 20); do
+    echo "$n! = " $(faktorialis $n)
+done
+\end{lstlisting}
+
+

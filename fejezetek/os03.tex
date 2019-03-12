@@ -1,0 +1,227 @@
+\subsection{Linkelés} 
+
+A \emph{linkelés} arra szolgál, hogy egy adott állományt több néven is el lehessen érni az állományrendszerben. 
+
+%Ha például van egy állományunk ,,text'' néven, akkor a linkelés segítségével elérhetjük, hogy mondjuk ,,szoveg'' néven is hivatkozhassunk rá.
+
+
+Ha az \verb.ls -l. paranccsal kilistázzuk a könyvtárunkat, láthatjuk a második oszlopban a \emph{linkelési szám} (link count) oszlopot. Ez mutatja, hogy egy fizikai állományra hány néven hivatkozunk a fájlrendszerben. Ez a fajta linkelés egyrészt helyet takarít meg, másrészt a %(gyakorlatlan) 
+felhasználó számára teljesen láthatatlan. 
+
+Ezen linkelés az ún. \emph{hard link}, mert közvetlenül az adott fájl inode-tábla bejegyzésére mutat a fájlrendszerben.\footnote{Minden egyes fájlhoz ill. könyvtárhoz tartozik egy egyedi számazonosító, ez az inode [index node, listázása: \texttt{ls -i}]. A partíció elején található az ún. inode-tábla, ami megmondja, hogy hányas inode-ú fájl a merevlemezen fizikailag hol található, illetve, hogy milyen jogok és egyéb attribútumok érvényesek rá.} A hard link csak egy fájlrendszeren belül működik; nem linkelhetünk be például floppy-ról egy fájlt.
+\medskip
+
+\emph{Hard link létrehozása}
+\begin{lstlisting}
+joe@localhost:~$ ls -l szoveg.txt 
+-rw-r--r-- 1 joe joe 12 2011-02-19 14:30 szoveg.txt
+joe@localhost:~$ ln szoveg.txt link_szovegre.txt
+joe@localhost:~$ ls -l szoveg.txt link_szovegre.txt 
+-rw-r--r-- 2 joe joe 12 2011-02-19 14:35 link_szovegre.txt
+-rw-r--r-- 2 joe joe 12 2011-02-19 14:30 szoveg.txt
+\end{lstlisting}
+
+
+Létezik még a \emph{szimbolikus linkelés} (soft link) is. Lényege, hogy a szimbolikus link nem a fájl inode-tábla bejegyzésére mutat, hanem egy olyan különleges fájlra, ami a linkelt fájl nevét tartalmazza. Szimbolikus linket szintén az \verb.ln. paranccsal hozunk létre, de a \verb.-s. opciót is meg kell adni. 
+\medskip
+
+\emph{Soft link létrehozása}
+\begin{lstlisting}
+joe@localhost:~$ ls -l /etc/hosts
+-rw-r--r-- 1 root root 367 2011-02-18 19:54 /etc/hosts
+joe@localhost:~$ ln -s /etc/hosts
+joe@localhost:~$ ls -l hosts
+lrwxrwxrwx 1 joe joe 10 2011-02-19 14:32 hosts -> /etc/hosts
+joe@localhost:~$ ls -l /etc/hosts
+-rw-r--r-- 1 root root 367 2011-02-18 19:54 /etc/hosts
+\end{lstlisting}
+
+A linkszám ebben az esetben nem változott (az csak a hard link esetén nő), a fájltípusnál egy \verb.'l'. betű szerepel, jelezvén, hogy szimbolikus linkről van szó, és a fájlnévnél a \verb.'->'. karakterek jelzik, hogy melyik fájlhoz van linkelva az állomány.
+
+
+
+\subsection{Archiválás, tömörítés}\label{subsec:archiv}
+A \verb.tar. parancs archiválást tesz lehetővé: segítségével egész könyvtárstruktúrákat egyetlen állományba tudunk menteni.
+Képes a \verb.gzip. tömörítő programmal együtt dolgozni, amely esetben könyvtárakat alkönyvtáraikkal és tartalmukkal együtt egyetlen
+tömörített állományba másolhatóak biztonsági mentés céljából.
+
+
+Legegyszerűbb esetben a tar segítségével egy könytárat teljes tartalmával egyetlen állományba mentünk:
+\begin{lstlisting}
+joe@localhost:~$ tar -cf Documents.tar Documents
+joe@localhost:~$ ls -l Documents.tar 
+-rw-r--r-- 1 joe joe 286720 2011-02-19 14:17 Documents.tar
+\end{lstlisting}
+
+A példában a tar \verb.-c. (create, létrehoz) opciója jelezte, hogy archívum létrehozása a célunk, a \verb.-f. (file, állomány) pedig a létrehozni kívánt állomány neve előtt áll. A \verb.-f. után mindig egy állomány nevének kell következnie, amely konvenció szerint a \verb@.tar@ végződést kapja.
+
+
+\textit{Megjegyzés:} A \verb@.tar@ végződésű állomány nem csak a könyvtárban található fájlokat és tartalmukat hordozza, hanem az egyes állományok tulajdonosainak, csoporttulajdonosainak és jogosultságot jelző kapcsolóinak értékét is. A teljes könyvtár e kiegészítő információk segítségével helyreállítható a következő módon:
+\begin{lstlisting}
+joe@localhost:~$ tar -xf  Documents.tar 
+\end{lstlisting}
+
+A \verb.-x. (extract, szétszedés) opció jelzi, hogy a tar archívumot újra szét kívánjuk bontani, míg a már ismert -f opció a fájlnév előtt áll. A kicsomagolás során a tar az eredeti archív állományt nem semmisíti meg, csak helyreállítja az eredeti könyvtárstruktúrát. A tar alkalmas a gzip tömörítő programmal való együttműködésre is.
+
+Amennyiben a \verb.-z. (gzip) opciót kapja, az archív állományt tömöríti -- helytakarékosság céljából. A következő példában látható, hogy a \verb.z. opció az \verb.f. elé került, mivel az \verb.f. után mindenképpen az állomány nevének kell következnie:
+\begin{lstlisting}
+joe@localhost:~$ tar -czf Documents.tar.gz Documents
+joe@localhost:~$ ls -l Documents.tar.gz 
+-rw-r--r-- 1 joe joe 267638 2011-02-19 14:19 Documents.tar.gz
+\end{lstlisting}
+Azoknak az állományoknak, amelyek tar archívokat gzip tömörített formában tartalmaznak, a konvenció szerint \verb@.tar.gz@ vagy egyszerűen
+\verb@.tgz@ végződést adunk. Ezen állományokat a \verb@tar@ a következő módon képes kicsomagolni:
+\begin{lstlisting}
+joe@localhost:~$ tar -xzf Documents.tar.gz
+\end{lstlisting}
+
+
+\subsection{Fájlok összehasonlítása}
+\noindent\Ovalbox{\large \texttt{cmp}  -- két fájl összehasonlítása }
+
+
+\begin{quotation}
+     A \texttt{cmp} program összehasonlít két tetszőleges típusú fájlt és kiírja az
+     eredményt a szabványos kimenetre.  Alapértelmezés szerint a \texttt{cmp} nem ír ki
+     semmit, ha a két fájl megegyezik. Ha különböznek, akkor kiírja a byte-
+     pozíció és a sor számát, ahol az első különbség előfordult.
+
+     A byte-pozíciók és a sorszámok számozása egytől kezdődik.
+
+%  \bigskip
+  \begin{description}
+    \item[-l]    Minden előforduló különbségnél kiírja a byte-pozíciót (decimális)
+           és a különböző byte-értékeket (oktális).
+     \item[-s]    Nem ír ki semmit különböző fájlok esetén, csak a kilépési kódot
+           adja vissza.           
+   \end{description}
+\end{quotation}
+
+
+\noindent\Ovalbox{\large diff -- állományok összehasonlítására használható}
+  \hfill\texttt{diff [ kapcsolók ] file1 file2} 
+
+\begin{quotation}
+A \texttt{diff} parancs segítségével két szöveges állományt hasonlíthatunk össze. Segítségével megtudhatjuk, hogy a két állomány megegyezik-e, és ha nem, akkor miben különböznek egymástól. 
+%
+A \texttt{diff} sor alapú mintaillesztést végez, azaz ha két sor egyetlen betűben is különbözik egymástól, a teljes sort kiírja. 
+\end{quotation}
+
+
+
+
+
+\noindent \Ovalbox{\large \texttt{cut} -- sorok kiválasztott részeit írja ki} 
+\begin{quotation}
+       A  \verb.cut.  program  minden  megadott  fájl  minden  sorának a kiválasztott
+       részeit írja ki a szabványos  kimenetre.  Amennyiben  a  bemeneti  fájl
+       nincs megadva vagy az a '-', a szabványos bemenetet dolgozza fel.
+
+\begin{small}
+\begin{verbatim}
+cut  [-ns]  [-b  BÁJTLISTA]  [-c  KARAKTERLISTA] [-d  ELVÁLASZTÓ]  [-f MEZŐLISTA] fájl
+\end{verbatim}
+\end{small}
+
+       A  BÁJTLISTA,  a  KARAKTERLISTA  és  a MEZŐLISTA egy vagy több számból, illetve tartományból áll,  melyeket  vesszők  választanak  el  (a  tartományokat  két, egymástól '-' jellel elválasztott szám határozza meg).
+       A bájtok, karakterek és mezők számozása  1-től  indulva  történik.  Nem teljes  tartomány  megadása  is  lehetséges: '-M' azonos '1-M'-mel, míg
+       'N-' jelentése: az N-től a sor végéig vagy az utolsó mezőig.
+
+
+\begin{lstlisting}
+joe@localhost:~$ cat matrix.txt 
+11 12 13 14 15
+21 22 23 24 25
+31 32 33 34 35
+joe@localhost:~$ cat matrix.txt | cut -d " " -f 2
+12
+22
+32
+joe@localhost:~$ cat matrix.txt | cut -d " " -f 4-5
+14 15
+24 25
+34 35
+\end{lstlisting}
+
+\end{quotation}
+
+\subsection{Csere}
+\noindent \Ovalbox{\large \texttt{tr} -- karakterek lecserélése, tömörítése és/vagy törlése }
+\begin{quotation}
+\begin{verbatim}
+tr  [-cdst]  [--complement] [--delete] [--squeeze-repeats]  
+                                   [--truncate-set1] string1 [string2]
+\end{verbatim}\bigskip
+
+    A  \texttt{tr} átmásolja a szabványos bemenetet a szabványos kimenetre  végrehajtva
+       egyet a következő feladatok közül:
+  \begin{itemize}
+   \item  cserél, és választhatóan tömöríti az eredményben az ismétlődő
+    karaktereket
+   \item   tömöríti az ismétlődő karaktereket
+    \item  karaktereket töröl
+    \item  karaktereket töröl, majd tömöríti az eredményben az  ismétlődő
+              karaktereket.
+  \end{itemize}            
+
+
+
+%\textit{Példák}
+\begin{lstlisting}
+joe@localhost:~$ echo "var" |tr a e
+ver
+joe@localhost:~$ echo "abcdefghijklmnopq" | tr a-j 0-9
+0123456789klmnopq
+joe@localhost:~$ echo "abcdef" | tr abc ABC
+ABCdef
+\end{lstlisting}
+% \end{small}
+
+Egy   gyakori   alkalmazása  a  \verb.tr.  parancsnak  a  kisbetűk  nagybetűvé
+       alakítása. Ez megoldható több módon. Itt van közülük három:
+\begin{lstlisting}
+tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
+tr a-z A-Z
+tr '[:lower:]' '[:upper:]'   
+\end{lstlisting}
+
+\end{quotation}
+\bigskip
+
+% 
+\noindent\Ovalbox{\large \texttt{sed} -- szöveg cseréje}
+\begin{quotation}
+\hfill\texttt{sed [-n] [-g] [-e script ] [-f sfile ] [ file ] ...}\bigskip
+
+%        A  \verb.sed. program a megnevezett fájlokat (alapértelmezés szerint a standard bemenetet) 
+%       a szabványos kimenetre másolja, de közben  egy  parancsokat tartalmazó szkriptnek megfelelően megszerkeszti.
+
+%        A \verb.-e. opció az egyszerű szerkesztést jelenti: a szerkesztő parancsot a következő argumentumból veszi. 
+%       Amennyiben több \verb.-e. is  van  a  parancssorban,  megjelenésük  sorrendjében hajtja őket végre. Amennyiben csak
+%        egyetlen \verb.-e. opció van és nincs \verb.-f., a \verb.-e. elhagyható.
+
+%        A \verb.-f. opció azt eredményezi, hogy a  parancsokat  az  "sfile"  fájlból
+%        veszi.   Amennyiben  több  is  van  belőlük,  megjelenésük sorrendjében
+%        kerülnek végrehajtásra. A \verb.-e. és \verb.-f. opciók keverhetők.
+
+% 	A \verb.-g. opció azt eredményezi, mintha minden  helyettesítési  parancsnak
+%        \verb.g. végződése lenne.
+
+%        A \verb.-n. opció elnyomja az alapértelmezett kimenetet.
+
+Sokszor szükségünk van arra, hogy egy állományban bizonyos szövegrészleteket kicseréljünk valami másra. 
+  A \verb.sed. használható erre az alábbi módon:
+
+  \begin{lstlisting}
+  sed -e s/ezt/erre/g <bemenet.txt >kimenet.txt
+  \end{lstlisting}
+  A fenti parancs a \texttt{bemenet.txt} fájlt olvassa, a \texttt{kimenet.txt} fájlba írja az eredményt 
+  és az \texttt{ezt} előfordulásait az \texttt{erre} szövegre cseréli ki.
+
+  
+\end{quotation}
+
+%\noindent\Ovalbox{\large \texttt{col} }
+
+
+

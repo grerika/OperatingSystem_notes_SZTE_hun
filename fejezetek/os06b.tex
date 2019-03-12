@@ -1,0 +1,171 @@
+\subsection{Tömbök}
+
+Lehetőség van egydimenziós tömbök használatára is. Fontos, hogy a tömb méretét nem kell előre lerögzíteni, továbbá a tömbelemek 
+indexe tetszőleges szöveg lehet (a számokat is szöveggé konvertálja)! Az ilyen tömböket asszociatív tömböknek nevezik.
+\begin{itemize}
+\item  A tömbök nevét a változónevek mintájára adhatjuk meg.
+\item  A tömb vegyesen tartalmazhat numerikus és szöveges elemeket is!
+\item  \texttt{NÉV[INDEX]=ÉRTÉK}\hfill
+	\begin{itemize}
+	\item Értékadás egy létező tömbelemnek, vagy új elem beszúrása. 
+	Az elem típusa \texttt{ÉRTÉK} típusa lesz. A tömb is létrejön, ha még nem létezett.
+	\item A C programozási nyelv egyéb értékadó, növelő és csökkentő műveletei is használhatók
+	\item Az \texttt{INDEX} és az \texttt{ÉRTÉK} konstans és tetszőleges kifejezés is lehet.
+	\end{itemize}
+\item  \texttt{NÉV[INDEX]}\hfill
+	\begin{itemize}
+	\item a megadott indexű tömbelem aktuális értékét jelöli
+	\item Definiálatlan elem értéke az üres sztring (\verb."".) ill. 0.
+	\end{itemize}
+\item \texttt{INDEX in NÉV} Ez a logikai reláció csak akkor igaz, ha a tömbnek van
+	\texttt{INDEX} indexű eleme. Lásd még: for, while, do \dots while, if utasítások.
+\item \texttt{delete NÉV[INDEX]} a megadott indexű tömbelem kitörlése
+\item \texttt{delete NÉV} A tömb összes elemének kitörlése. Vigyázat, a tömb
+	továbbra is létezni fog, csak üres lesz!
+\end{itemize}
+
+\subsection{Kifejezések felépítése}
+
+A minták és az utasítások megadásához használhatunk különféle
+kifejezéseket. Az ezeket felépítő építőkövek: konstansok,
+változók, műveleti jelek, függvények, segédjelek (például zárójelek, vessző).
+
+%\item (KIF): csoportosítás (műveleti sorrend felülbírálása)
+\subsubsection*{Műveletek, relációk}
+	\begin{itemize}
+	\item  Aritmetika valós számokon: \verb.+,-,*, /, %,^. (hatványozás)
+	\item  Növelés (increment), csökkentés (decrement): \verb.++, --. (mindkettő prefix
+	és postfix használatban is)
+	\item  Sztring összefűzés, konkatenáció: egymás mellé írás, illetve szóköz
+	\item  Mező értékének használata (mezőhivatkozás): \verb.$KIF.
+	\item  Értékadás (assignment): \verb.=, +=, -=, *=, /=, %=, ^=.
+	\item  Összehasonlító relációk: \verb.<, <=, >, >=, ==, !=.
+	
+	Az összehasonlítás csak akkor történik numerikusan, ha a reláció mindkét
+	oldalán szám konstans, numerikus változó vagy mezőhivatkozás áll.
+	%
+	Máskülönben az értékek szövegesen (lexikografikusan, azaz az ábécé rendet követve) lesznek összehasonlítva!
+	
+	A relációk numerikus értéke igaz esetén 1, különben 0. Ez az
+	összehasonlító és mintaillesztő relációkra, továbbá az in relációra és a
+	logikai műveletekre is vonatkozik.
+	\item  Mintaillesztő relációk: \verb.~/REGKIF/., \verb.!~/REGKIF/.
+	
+	A mintaillesztő relációk igazak, ha a bal oldali kifejezés mint szöveg
+	illeszkedik (\verb.~.) ill. nem illeszkedik (\verb.!~.) a jobb oldali reguláris kifejezésre.
+	\item  Tömbelem létezésének vizsgálata: \verb.INDEX in NÉV.
+	\item Logikai műveletek: ! (negáció), \&\& (konjunkció), || (diszjunkció)
+	
+	A logikai műveletek, a feltételes kifejezés és a vezérlési szerkezetek
+	szempontjából hamisnak (false) minősül az üres sztring (\verb."".) és a nulla.
+	Minden más érték igaznak (true) számít.
+	\item  Feltételes kifejezés: \verb.KIF1?KIF2:KIF3. (mint a C  nyelvben)
+	
+	A feltételes kifejezésben először KIF1 lesz kiértékelve. Ha igaz, akkor
+	KIF2, különben KIF3 lesz kiszámolva, s ők adják a kifejezés értékét is
+	
+	\end{itemize}
+	
+\subsubsection*{Numerikus függvények}
+	\begin{itemize}
+	\item  Trigonometria: \texttt{sin(KIF)}, \texttt{cos(KIF)}
+	\item  Gyökvonás: \texttt{sqrt(KIF)}
+	\item  Exponens, logaritmus: \texttt{exp(KIF), log(KIF)}
+	\item  Egésszé konvertálás csonkolással (truncation): \texttt{int(KIF)}
+	\end{itemize}
+
+\subsubsection*{Szöveges függvények}
+	\label{stringawk}
+	\begin{description}
+	\item[\tt index(SZÖVEG,RÉSZ)] a \texttt{RÉSZ} szöveg legelső előfordulásának pozíciója \texttt{SZÖVEG}ben. 
+
+		Ha nincs ilyen rész, akkor nullát ad vissza.
+	\item[\tt length(SZÖVEG)] a megadott sztring hossza karakterekben
+	\item[\tt split(SZÖVEG,TÖMB,HAT)] a \texttt{SZÖVEG}et a \texttt{HAT} határolójel mentén
+	darabokra bontja, a darabokat a meg\-a\-dott tömbben eltárolja, majd
+	visszaadja a darabok számát. A \texttt{SZÖVEG} változatlan marad. A tömb
+	elemei a darab sorszámával (pont nélkül) lesznek indexelve. \texttt{HAT} reguláris kifejezés is lehet.
+	\item[\tt substr(SZÖVEG,IND)] a szöveg \texttt{IND} sorszámú karakterén kezdődő
+	részét adja vissza
+	\item[\tt substr(SZÖVEG,IND,HOSSZ)] mint előbb, de legfeljebb \texttt{HOSSZ} karakterből álló részt ad vissza
+	\item[\tt tolower(SZÖVEG)] visszaadja a \texttt{SZÖVEG} kisbetűssé konvertált értékét
+	\item[\tt toupper(SZÖVEG)] visszaadja a \texttt{SZÖVEG} nagybetűssé konvertált értékét
+	\item \verb.getline nev < "-". 	 Standard inputról olvas a \texttt{nev} változóba
+
+	\begin{verbatim}
+	BEGIN {
+	    printf "Irja be a nevet:"
+	    getline nev < "-"
+	    printf "%s kora:",nev
+	    getline kor < "-"
+	    print nev, ", kovetkezo evben " kor + 1 "eves lesz"
+	}
+	\end{verbatim}
+
+	\end{description}
+
+
+
+
+
+
+%\subsection{Akciók}
+%A szabályok akcióját alkotó utasítások építőelemei:
+%\begin{itemize}
+%\item  a korábban már látott delete utasítás
+%\item  értékadó, növelő és csökkentő kifejezések
+%\item  vezérlési szerkezetek
+%\item egyéb utasítások
+%\end{itemize}
+
+\subsection{Vezérlési szerkezetek}
+\begin{description}
+\item[\tt {UTASÍTÁSOK}] összetett utasítás, utasításblokk/-lista
+\item[\tt  if (FELTÉTEL) UTASÍTÁS else UTASÍTÁS0] szelekciós vezérlés
+\item[\tt  while (FELTÉTEL) UTASÍTÁS] előfeltételes ismétléses vezérlés
+\item[\tt  do UTASÍTÁS while (FELTÉTEL)] végfeltételes ismétléses vezérlés
+\item[\tt  for (KIF1;KIF2;KIF3) UTASÍTÁS] számlálásos ismétléses vezérlés
+\item[\tt  for (INDEX in NÉV) UTASÍTÁS] Diszkrét ismétléses vezérlést
+valósít meg. Az INDEX változó sorban felveszi a NÉV nevű tömb elemeinek indexét, miközben a megadott utasítás végrehajtódik.
+\item[\tt  break, continue] Kilépés a ciklusból, ill. rátérés a ciklus következő iterációjára 
+(for, while és do...while esetén használhatók). Mindig az őket körbevevő legbelső ciklusra vonatkoznak!
+\item[\tt  exit] A bemenet feldolgozásának azonnali befejezése. Ha nem az \texttt{END} minta
+akciójában használjuk, akkor az esetleges END minta akciója végrehajtódik, különben az awk rögtön befejezi működését.
+\item[\tt  print LISTA] Kiírja a vesszővel tagolt kifejezéslista tagjainak értékét, majd
+az ORS tartalmát (alapesetben egy sortörést). A kiírt értékek közé az \verb.OFS. tartalma kerül (alapesetben egy szóköz).
+\item[\tt  print] ekvivalens a \verb.print $0. utasítással (az aktuális rekord teljes tartalmát
+kiírja)
+\item[\tt  printf FORMÁTUM,LISTA] formázott kiíratás (mint a C prog. nyelvben)
+\item[\tt  next] Azonnal nekikezd a következő bemeneti rekord feldolgozásához, a legelső szabály mintáját tesztelve.
+\end{description}
+
+
+\subsection*{Gyakorló feladatok}
+\begin{enumerate}
+\setcounter{enumi}{5}
+\item A korábbi \texttt{ls -l} feldolgozó szkriptünket, ami átlagos fájlméretet számolt, egészítsük ki,
+	számoljuk ki a fájlméret szórását is!
+
+	+ feladat: Oldjuk meg a feladatot tömb használata nélkül! (matematikusok előnyben!)
+\end{enumerate}
+
+\noindent \emph{Használjuk a \texttt{scriptek/telefon.txt} fájlt. A fájl az egyetemi telefonkönyv egy részlete. }
+
+\begin{enumerate}
+\setcounter{enumi}{6}
+\item Állapítsuk meg, hogy melyik beosztásból hány munkatárs szerepel a fájlban (a beosztás a 4. oszlopban szerepel)!
+\item Számoljuk össze mennyi személynél szerepel e-mail cím!
+\item Számoljuk össze mennyi személy nevében szerepel a \texttt{dr.} egyszer és mennyi alkalommal kétszer!
+\item Számoljuk össze mennyi személy telefonszámában szerepel a 42-es szám!
+	Ebből mennyinek végződik 42-re a telefonszáma?
+\end{enumerate}
+
+
+	\subsection[Összetett példák]{Összetett példák (\texttt{ls -l} outputjára)}
+    \lstinputlisting[language=awk]{peldak/awk/ls.awk}
+    
+    \lstinputlisting[language=awk]{peldak/awk/ls2.awk}
+
+	%\noindent\includegraphics[width=0.75\textwidth]{peldak/awk/ls-crop.pdf}
+	
+	%\noindent\includegraphics[width=0.75\textwidth]{peldak/awk/ls2-crop.pdf}

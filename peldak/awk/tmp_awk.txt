@@ -1,0 +1,27 @@
+
+#END{}
+}
+	}
+		}
+				printf "tomb[%d]=%s\n",i,tomb[i]
+			for(i=1;i<=meret;i++)
+			meret=split(fajlnev,tomb," -> ")
+		}else{
+			printf "[NL] %s\n",fajlnev
+		if(index(fajlnev,"->")==0){
+		
+		}
+			fajlnev=fajlnev " " $i
+			#	break
+			#if($i=="->")
+		for(i=9;i<=NF;i++){	
+		fajlnev=$8
+		printf "%s\t", $5
+	if(NR>1){
+{
+}
+#	print "-----------------"
+#	print "Jog\t\tMeret\tNev"
+BEGIN{
+
+#! /usr/bin/awk -f

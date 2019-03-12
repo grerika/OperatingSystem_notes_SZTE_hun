@@ -1,0 +1,130 @@
+% Reguláris kifejezések
+
+Sok program (főleg szűrők) használ \emph{mintaillesztést} (pattern matching), \emph{mintakeresést} (pattern scanning) és mintafeldolgozást (pattern processing). Ilyen esetekben a -- legtöbbször szöveges -- bemeneti adatok azon részével fog dolgozni a program, amely egy megadott mintának megfelel, azaz a mintára illeszkedik (vagy amire a minta illeszkedik). Az ilyen komplex minták egyik gyakran alkalmazott formája a szabályos avagy \emph{reguláris kifejezés} (regular expression, regexp, RE).
+
+A reguláris kifejezésekkel mélyebben a formális nyelvek elmélete (theory of formal languages) foglalkozik.
+
+\bigskip
+
+\textbf{Leírás:} man 7 regex, man grep, info grep, man awk/gawk, info gawk
+
+\bigskip
+
+Egy reguláris kifejezés a szövegnek mindig a legkorábban elkezdődő, és ezen belül a leghosszabb részére illeszkedik. Ez a részkifejezésekre is igaz. Az illeszkedő rész a szövegen belül bárhol – akár egy szó belsejében is – előfordulhat, kivéve néhány esetet (pl. %\^ és \$, ld. következő dia).
+
+Alapesetben a kisbetűk és nagybetűk különbözőnek számítanak illesztéskor.
+
+A reguláris kifejezésekben néhány karakternek speciális jelentése van. Mivel ezek közül sokat a shell is speciálisan kezel, így a parancssorban megadott reguláris kifejezést érdemes aposztrófok közé zárni.
+
+\subsection{Elemi kifejezések}
+
+\begin{description}
+ \item[(KIF)] csoportosítás (műveleti sorrend felülbírálása), \texttt{KIF}-re illeszkedik
+ \item[{()}] az üres szóra illeszkedik
+ \item[ [\textbf{HALMAZ}] \hspace{-3mm} ]\hspace{+3mm}  A halmaz bármely karakterének egy példányára illeszkedik. A halmazt a karakterek egymás mellé írásával adhatjuk meg.
+\item[ [\textbf{TOL-IG}] \hspace{-3mm} ]\hspace{+3mm}  mint előbb, de itt egy tartományt adunk meg
+\item[ [\textasciicircum \textbf{HALMAZ}] \hspace{-3mm} ]\hspace{+3mm}  a halmazban nem szereplő bármely karakter egy példányára illeszkedik (a sortörést kivéve)
+\item[ . ] bármilyen karakter egy példányára illeszkedik (a sortörést kivéve)
+\item[ \textasciicircum ] a sor elejére illeszkedik
+\item[\$] a sor végére illeszkedik
+\item[$\backslash$KARAKTER] a $\backslash$ után írt speciális jelentésű karaktert közönségesként kezeli
+\item[KARAKTER] bármely közönséges karakter saját maga egy példányára illeszkedik
+\end{description}
+
+\subsection{Összetett kifejezések}
+\begin{description}
+\item[$\mathbf{KIF_1KIF_2}$] (két kifejezés egymás mellé írása): Összefűzés, konkatenáció (concatenation). Olyan szövegre illeszkedik, amelynek első fele KIF1-re, második fele KIF2-re illeszkedik. Több kifejezést is összefűzhetünk.
+\item[$\mathbf{KIF_1|KIF_2|\dots}$] Logikai MEGENGEDŐ VAGY (diszjunkció), alternáció (alternation). 
+	Olyan szövegre il\-lesz\-ke\-dik, amely legalább az egyik kifejezésre (alternatívára) illeszkedik.
+ismételt illesztés, ismétlésszám megadása, iteráció (repetition, iteration):
+\item[KIF*] KIF akárhány egymást követő példányára illeszkedik (0 is)
+\item[KIF+] KIF legalább 1 egymást követő példányára illeszkedik
+\item[KIF?] KIF 0 vagy 1 példányára illeszkedik (azaz KIF opcionális)
+\item[KIF\{I\}] KIF pontosan I egymást követő példányára illeszkedik
+\item[KIF\{I,\}] KIF legalább I egymást követő példányára illeszkedik
+\item[KIF\{I,J\}] mint előbb, de legfeljebb J példányra illeszkedik ($I\leq J$)
+\end{description}
+
+Műveleti erősség csökkenő sorrendben: iteráció, konkatenáció, alternáció
+
+
+
+
+\subsection{grep (ismét)}
+\begin{center}
+\verb@grep ’REGKIF’ ÁLLOMÁNY(OK) @
+\end{center}
+
+Kiírja a megadott állomány(ok) mindazon sorait, amelyek illeszkednek a REGKIF reguláris kifejezésre. Szűrőnek tekinthető.
+%
+A korábban említettek miatt az aposztrófok kiírása ajánlott.
+%
+Ha nem adunk meg állományt, akkor a szabványos bemenetről olvas.
+\bigskip
+
+\textit{Kapcsolók}
+\begin{description}
+ \item[-c] Az illeszkedő sorok tartalma helyett csak azok darabszáma jelenik meg. A -v opció esetén a nem illeszkedő sorok száma íródik ki.
+\item[-E] Teljes értékű, kibővített (extended) kifejezések használata. Ha ezt elhagyjuk, akkor a reguláris kifejezéseknek egy régebbi változatát kell megadnunk. Ez utóbbi jelentősen eltér a korábban bemutatottól!
+\item[-e ’REGKIF’] Akkor kell használni, ha a reguláris kifejezés - jellel kezdődik. Közvetlenül a REGKIF előtt kell állnia!
+\item[-F] REGKIF-ben minden karaktert közönségesként értelmez
+\item[-f \texttt{KIFFÁJL}] A \texttt{KIFFÁJL} minden sorát egy-egy REGKIF-nek tekinti. Ilyenkor a bármelyik kifejezésre illeszkedő sorok jelennek meg
+\item[-i] a kisbetűket és a nagybetűket azonosnak tekinti
+\item[-n] az illeszkedő sorok tartalma elé a sorszámukat is kiírja
+\item[-o] a sorokból csak az illeszkedő részt jeleníti meg
+\item[-R, -r] Ha könyvtárat adtunk meg, akkor a keresés az alkönyvárakban és azok teljes tartalmában történik (rekurzív keresés).
+\item[-v] illeszkedés helyett nem-illeszkedést vizsgál (inverzió)
+\item[-w] Csak olyan sort ír ki, amelyben legalább egy egész szó (nemcsak egy részlet) illeszkedik a reguláris kifejezésre
+\end{description}
+
+A gyakorlatban a \texttt{-E} opció vagy a vele ekvivalens \texttt{egrep} parancs használata ajánlott! 
+Ha nem így tennénk, vegyük figyelembe, hogy ezek nélkül a reguláris kifejezéseknek egy régebbi 
+(basic) változatát kell használnunk, ahol pl. a ( és ) közönséges karakterek, a csoportosításra pedig a 
+$\backslash($ és $\backslash)$ jelölések szolgálnak (tehát a korábban látotthoz képest pont fordítva működnek).
+ Ugyanez érvényes a $\{, \},$ |, ? és + karakterekre is.
+
+\subsection{Példák}
+\begin{itemize}
+ \item \textbf{alma} azt jelenti, hogy a minta a soron belül bárhol előfordulhat
+ \item \textbf{\textasciicircum alma} előírja, hogy a mintának a sor elején kell előfordulnia
+\item \textbf{\textasciicircum [mh]?alma} azt jelenti, hogy a sor elején alma, malma vagy halma mintának kell előfordulnia
+\item \textbf{\textasciicircum [\textasciicircum mh]alma}
+  azokra a sorokra illeszkedik, melyek elején nem szerepel az alma, malma vagy halma sorozat
+% \item \textbf{}
+% \item \textbf{}
+\end{itemize}
+
+\begin{lstlisting}
+$ ls -l | grep ^d
+\end{lstlisting}
+kiírja a munkakönyvtárban levõ összes katalógust
+
+\begin{lstlisting}
+$ grep '^main' *.c 
+\end{lstlisting}
+kiírja a .c végű állományok azon sorait, amelyek a main karaktersorral kezdődnek.
+
+\subsection*{Feladatok}
+\begin{enumerate}
+\item Írjunk reguláris kifejezést, ami az egész számokra illeszkedik!
+	
+
+\item Írjunk reguláris kifejezést, ami a szabályos e-mail címekre illeszkedik!
+
+	Tegyük fel, hogy e-mail cím általános alakja: \texttt{local@domain}, ahol a 	
+	\begin{description}
+	\item[local] az angol abc kisbetűit, számokat és kötőjelet, pontot illetve aláhúzást (\_) tartalmazhat, de a\-lá\-hú\-zás\-sal nem kezdődhet
+	\item[domain] részben az abc kisbetűi, számok és kötőjel, illetve pontok lehetnek. 
+	%	^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*$
+	\end{description}
+
+	A fenti egy egyszerűsített leírása a ténylegesen érvényes e-mail címeknek. 
+	Nem lehet például pont a @ előtt, illetve nem lehet két pont egymás után (sem a local, sem a domain részben)\footnote{További infó: \url{http://en.wikipedia.org/wiki/Email\_address\#Syntax}}.
+
+\item Próbáljunk szabályos magyar címekre szűrni, ahol tegyük fel, hogy a cím az alábbihoz hasonló formában fordulhat elő:
+
+	\texttt{XXXX. Város, Közterületnév utca/út/körút/sétány/tér/park szám.}
+
+	Figyeljünk arra, hogy közterület neve állhat több szóból is!
+	
+\end{enumerate}
