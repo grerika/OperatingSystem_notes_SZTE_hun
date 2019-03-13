@@ -1,0 +1,230 @@
+\documentclass[a5paper]{article}	
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\widowpenalty10000
+\clubpenalty10000
+\usepackage[magyar,safe=none]{babel}%\usepackage[hungarian]{babel}
+\usepackage{graphics,graphicx}
+\usepackage{multirow,multicol}
+%  \usepackage[Lenny]{fncychap}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage{fancybox}
+\usepackage{ccicons}
+\usepackage{booktabs}
+%\usepackage{xstring,nevelok}
+%/\usepackage{minted}
+\usepackage{texments}
+	\usestyle{tango}
+	\usestyle{native}
+\usepackage{lscape}
+\usepackage{anysize}
+	%lrtd
+	\marginsize{15mm}{15mm}{10mm}{10mm}
+\usepackage[sc,osf]{mathpazo}
+
+\usepackage[unicode=true]{hyperref}
+\hypersetup{pdftoolbar=true,
+	pdfmenubar=true,
+	pdffitwindow=true,
+	pdfnewwindow=false,
+	plainpages=false,
+	hypertexnames=false,
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=green,
+	filecolor=magenta,
+	urlcolor=blue,
+	pdftitle=Operációs rendszerek gyakorlati jegyzet,
+	pdfauthor=Griechisch Erika,
+	pdfsubject=operating systems linux bash awk}
+	
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\rhead{\small\emph{Operációs rendszerek gyakorlat}	}
+\chead{}
+\lhead{\small Utoljára frissítve \today}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\usepackage{highlight}
+\usepackage{multirow,multicol}
+\usepackage{booktabs,keystroke}
+\usepackage{listings,xcolor}
+
+%\lstset{linewidth=\textwidth}
+%\lstset{commentstyle=\textit, stringstyle=\upshape,showspaces=false}
+%\lstset{frame=trbl,frameround=tttt}
+%\lstset{commentstyle=\textit, showspaces=false}
+
+\lstset{ %
+language=bash  ,              % choose the language of the code
+basicstyle=\ttfamily\footnotesize,       % the size of the fonts that are used for the code
+%numbers=left,                   % where to put the line-numbers
+%numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+%stepnumber=5,                   % the step between two line-numbers. If it's 1 each line 
+                                % will be numbered
+%numbersep=10pt,                  % how far the line-numbers are from the code
+boxpos=c,
+linewidth=0.9\textwidth,
+%columns=l,
+xleftmargin=0.05\textwidth,
+framexbottommargin=-1em,
+backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+frame=single,                   % adds a frame around the code
+tabsize=2,                      % sets default tabsize to 2 spaces
+captionpos=b,                   % sets the caption-position to bottom
+breaklines=true,                % sets automatic line breaking
+breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+title=\lstname,                 % show the filename of files included with \lstinputlisting;
+                                % also try caption instead of title
+escapeinside={\%*}{*)},         % if you want to add a comment within your code
+morekeywords={print, getline, let, in, tar, cp, ls, mkdir, mv, esac, convert, less, more, file, dirname, basename,touch,chmod,chown,chgrp,sort,tee,grep,egrep, awk, wc,who,whoami,finger,tr,mail,sleep,play, firefox},          % if you want to add more keywords to the set
+keywordstyle=\color{blue!50!black},
+belowcaptionskip=0pt
+%frame=shadowbox
+}
+\lstset{frameshape={RYRYNYYYY}{yny}{yny}{RYRYNYYYY}}
+
+\author{Összeállította: \textit{Griechisch Erika}}
+\title{{\huge \sc Operációs Rendszerek}\\gyakorlati jegyzet}
+%\date{2013/2014 tavaszi félév \\ \small Utoljára frissítve: \textit{\today}}
+\date{\small Utoljára frissítve: \textit{\today}}
+
+\begin{document}
+{}
+\vspace{30mm}
+\maketitle
+\thispagestyle{empty}
+\vspace{30mm}
+
+
+\begin{center}
+\includegraphics[width=0.25\textwidth]{pics/Linux_Logo}
+
+\vspace{10mm}
+
+\begin{tabular}{cccc}
+	\includegraphics[width=0.1\textwidth]{pics/Debian}
+	&
+	\includegraphics[width=0.1\textwidth]{pics/Ubuntu}
+	&
+	\includegraphics[width=0.1\textwidth]{pics/Mandriva}
+	&
+	\includegraphics[width=0.1\textwidth]{pics/Fedora}
+	  \\
+	  debian	& ubuntu & mandriva & fedora	
+  \end{tabular}
+
+%\vspace{10mm}
+%
+%\includegraphics[width=0.1\textwidth]{pics/Gnome}
+%	\hspace{5mm}
+%	\includegraphics[width=0.1\textwidth]{pics/KDE}
+%\end{center}
+
+\vfill 
+%\begin{center}
+\small \ccLogo\ A képek forrása: \url{http://tatice.deviantart.com/art/Operating-Systems-affiliates-80146648}
+\end{center}
+
+\pagebreak
+%\small
+\tableofcontents
+
+\cleardoublepage
+
+
+
+%\section*{Követelmények}
+%\pagenumbering{roman}
+%	\input{os00.tex}
+%	\vfill\pagebreak
+
+\section{Alapok}
+
+\pagenumbering{arabic}
+	\input{fejezetek/os01.tex}
+%	\vfill\pagebreak
+
+\section{Jogosultságok, csatornák, szöveges fájlok, felhasználók}
+	\input{fejezetek/os02.tex}
+	\vfill\pagebreak
+
+
+\section{Linkelés, archiválás, csere}
+	\input{fejezetek/os03.tex}
+	\vfill\pagebreak
+
+\section{BASH}
+	\input{fejezetek/os04.tex}
+%	\vfill\pagebreak
+%\section{BASH II.}
+	\input{fejezetek/os04b.tex}
+	\vfill\pagebreak	
+	\subsection{Tömb}
+	Nem kötelező anyagrész, de hasznos tudni.
+		\input{fejezetek/tombok.tex}
+	\vfill\pagebreak	
+
+\section{Reguláris kifejezések}
+	\input{fejezetek/os05.tex}
+	\vfill\pagebreak
+
+\section{AWK}
+	\input{fejezetek/os06a.tex}
+	\vfill\pagebreak
+
+	\input{fejezetek/os06b.tex}
+	%\vfill\pagebreak
+
+
+	\vfill\pagebreak
+
+\section{Irodalom}
+\subsection*{Felhasznált irodalom}
+A jegyzet az alább feltüntetett könyvek, jegyzet illetve weboldal alapján készült, némi átcsoportosítással, 
+itt-ott példákkal kiegészítve, vagy  épp átfogalmazva. 
+\pagestyle{empty}
+\begin{itemize}
+\item A parancsok kézikönyv (man) oldalai (1.-4. fejezet)
+\item \textsc{Pere László:} \textit{Linux felhasználói ismeretek I.}, Kiskapu kiadó (5.-6. fejezet)
+\item \textsc{Rodek Lajos} féle diasorozat (4-6. fejezet)
+\item \textsc{Büki András}: \textit{Héjprogramozás}, Kiskapu kiadó
+\item \url{http://www.fsz.bme.hu/~szebi/slides/U2/sld033.htm} (5. fejezet, regex példák)
+\end{itemize}
+
+\subsection*{Héjprogramozás Linux alatt (Linuxvilág)}
+    \begin{enumerate}
+    \item rész: \url{http://www.linuxvilag.pbk.hu/content/files/cikk/28/cikk_28_61_61.pdf}
+    \item rész (héjváltozók): \url{http://linuxvilag.hu/content/files/cikk/29/cikk_29_59_59.pdf} 
+    \item rész (feltételek): \url{http://www.linuxvilag.pbk.hu/content/files/cikk/30/cikk_30_60_61.pdf}
+    \item rész: \url{http://www.linuxvilag.pbk.hu/content/files/cikk/31/cikk_31_62_63.pdf}
+    \item rész (AWK): \url{http://www.linuxvilag.pbk.hu/content/files/cikk/32/cikk_32_68_69.pdf}
+    \item rész (sed): \url{http://www.linuxvilag.pbk.hu/content/files/cikk/33/cikk_33_54_55.pdf} 
+    \item rész: \url{http://www.linuxvilag.pbk.hu/content/files/cikk/34/cikk_34_50_51.pdf}
+    \item rész (átmeneti fileok): \url{http://www.linuxvilag.pbk.hu/content/files/cikk/35/cikk_35_50_51.pdf}
+    \item rész: \url{http://www.linuxvilag.pbk.hu/content/files/cikk/36/cikk_36_54_55.pdf}
+    \end{enumerate}
+
+
+\section*{Kódok elérhetősége}
+%A jegyzetben szereplő kódok az 
+\begin{center}
+\url{http://www.inf.u-szeged.hu/~grerika/teaching/os/scriptek.tar.gz}
+\end{center}
+%állományban megtalálhatóak.
+
+
+\section*{Jegyzet elérhetősége}
+%A jegyzet legutolsó verziója elérhető  a
+\begin{center}
+\url{http://www.inf.u-szeged.hu/~grerika/teaching/os/OperaciosRendszerek_jegyzet.pdf}
+\end{center}
+%címen.
+\end{document}
