@@ -53,11 +53,8 @@
 \usepackage{booktabs,keystroke}
 \usepackage{listings,xcolor}
 
-%\lstset{linewidth=\textwidth}
-%\lstset{commentstyle=\textit, stringstyle=\upshape,showspaces=false}
-%\lstset{frame=trbl,frameround=tttt}
-%\lstset{commentstyle=\textit, showspaces=false}
-
+\newcommand{\sectionbreak}{\clearpage}
+    
 \lstset{ %
 language=bash  ,              % choose the language of the code
 basicstyle=\ttfamily\footnotesize,       % the size of the fonts that are used for the code
@@ -149,23 +146,16 @@ belowcaptionskip=0pt
 
 \pagenumbering{arabic}
 	\input{fejezetek/os01.tex}
-%	\vfill\pagebreak
 
 \section{Jogosultságok, csatornák, szöveges fájlok, felhasználók}
 	\input{fejezetek/os02.tex}
-	\vfill\pagebreak
-
 
 \section{Linkelés, archiválás, csere}
 	\input{fejezetek/os03.tex}
-	\vfill\pagebreak
-
+	
 \section{BASH}
 	\input{fejezetek/os04.tex}
-%	\vfill\pagebreak
-%\section{BASH II.}
 	\input{fejezetek/os04b.tex}
-	\vfill\pagebreak	
 	\subsection{Tömb}
 	Nem kötelező anyagrész, de hasznos tudni.
 		\input{fejezetek/tombok.tex}
@@ -173,57 +163,24 @@ belowcaptionskip=0pt
 
 \section{Reguláris kifejezések}
 	\input{fejezetek/os05.tex}
-	\vfill\pagebreak
-
+	
 \section{AWK}
 	\input{fejezetek/os06a.tex}
-	\vfill\pagebreak
-
 	\input{fejezetek/os06b.tex}
-	%\vfill\pagebreak
 
-
-	\vfill\pagebreak
 
 \section{Irodalom}
-\subsection*{Felhasznált irodalom}
-A jegyzet az alább feltüntetett könyvek, jegyzet illetve weboldal alapján készült, némi átcsoportosítással, 
-itt-ott példákkal kiegészítve, vagy  épp átfogalmazva. 
-\pagestyle{empty}
-\begin{itemize}
-\item A parancsok kézikönyv (man) oldalai (1.-4. fejezet)
-\item \textsc{Pere László:} \textit{Linux felhasználói ismeretek I.}, Kiskapu kiadó (5.-6. fejezet)
-\item \textsc{Rodek Lajos} féle diasorozat (4-6. fejezet)
-\item \textsc{Büki András}: \textit{Héjprogramozás}, Kiskapu kiadó
-\item \url{http://www.fsz.bme.hu/~szebi/slides/U2/sld033.htm} (5. fejezet, regex példák)
-\end{itemize}
-
-\subsection*{Héjprogramozás Linux alatt (Linuxvilág)}
-    \begin{enumerate}
-    \item rész: \url{http://www.linuxvilag.pbk.hu/content/files/cikk/28/cikk_28_61_61.pdf}
-    \item rész (héjváltozók): \url{http://linuxvilag.hu/content/files/cikk/29/cikk_29_59_59.pdf} 
-    \item rész (feltételek): \url{http://www.linuxvilag.pbk.hu/content/files/cikk/30/cikk_30_60_61.pdf}
-    \item rész: \url{http://www.linuxvilag.pbk.hu/content/files/cikk/31/cikk_31_62_63.pdf}
-    \item rész (AWK): \url{http://www.linuxvilag.pbk.hu/content/files/cikk/32/cikk_32_68_69.pdf}
-    \item rész (sed): \url{http://www.linuxvilag.pbk.hu/content/files/cikk/33/cikk_33_54_55.pdf} 
-    \item rész: \url{http://www.linuxvilag.pbk.hu/content/files/cikk/34/cikk_34_50_51.pdf}
-    \item rész (átmeneti fileok): \url{http://www.linuxvilag.pbk.hu/content/files/cikk/35/cikk_35_50_51.pdf}
-    \item rész: \url{http://www.linuxvilag.pbk.hu/content/files/cikk/36/cikk_36_54_55.pdf}
-    \end{enumerate}
+    \input{fejezetek/irodalom.tex}
 
 
-\section*{Kódok elérhetősége}
-%A jegyzetben szereplő kódok az 
+\section{Irodalom}
+    \input{fejezetek/irodalom.tex}
+
+
+\section*{Jegyzet és kódok elérhetősége}
 \begin{center}
-\url{http://www.inf.u-szeged.hu/~grerika/teaching/os/scriptek.tar.gz}
-\end{center}
-%állományban megtalálhatóak.
+\url{https://github.com/grerika/OperatingSystem_notes_SZTE_hun}
 
-
-\section*{Jegyzet elérhetősége}
-%A jegyzet legutolsó verziója elérhető  a
-\begin{center}
-\url{http://www.inf.u-szeged.hu/~grerika/teaching/os/OperaciosRendszerek_jegyzet.pdf}
+\includegraphics[width=3em]{pics/icons8-github}
 \end{center}
-%címen.
 \end{document}

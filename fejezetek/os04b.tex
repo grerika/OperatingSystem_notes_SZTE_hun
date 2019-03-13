@@ -395,6 +395,8 @@ amelyik az illeszkedő minták közül az elsőhöz tartozik. A case a minták k
 
 \begin{minipage}{0.425\textwidth}
 Példa: \texttt{scriptek/bash/case.sh}
+%\lstinputlisting[language=bash]{scriptek/bash/case.sh}
+
 \lstset{linewidth=\textwidth}
 \begin{lstlisting}
  #!/bin/bash
@@ -454,29 +456,8 @@ esac
  \end{tabular}
 %\caption{BASH vágókifejezések}
 \end{center}
-%\end{table}
-\begin{lstlisting}[title=scriptek/bash/vago.sh]
-#! /bin/bash
-# Forras: Pere Laszlo, Linux felhasznaloi ismeretek I.
-# PARAMETEREK SZAMANAK ELLENORZESE
-if [ $# -ne 2 ]; then
-	echo "`basename $0` - Allomany kiterjesztesenek csereje"
-	echo "Hasznalat:"
-	echo "		`basename $0` <regi kit> <uj kit>"
-	exit 1
-fi
-# TENYLEGES MUNKA
-for FILES in *.$1; do
-	echo -n "$FILES -> ${FILES%$1}$2"
-	if [ -e "${FILES%$1}$2" ]; then		
-		echo " Hiba: A ${FILES%$1}$2 mar letezik"
-	else
-		echo
-		mv $FILES ${FILES%$1}$2
-	fi
-done
-\end{lstlisting}
 
+\lstinputlisting[language=bash]{scriptek/bash/vago.sh}
 
 \subsection{Függvények}
 
@@ -501,7 +482,7 @@ Függvényekben létrehozhatunk lokális változókat is, a \texttt{local} kulcs
 
 %Például:
 
-
+%\lstinputlisting[language=bash]{scriptek/bash/fact.sh}
 \begin{lstlisting}
 #! /bin/bash
 

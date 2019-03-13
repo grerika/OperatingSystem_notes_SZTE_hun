@@ -377,32 +377,10 @@ Arra is figyelni kell, hogy az \texttt{expr} egyes műveletei a héj számára i
 levédeni ezeket a \verb.\. karakterrel, furcsa mellékhatásokat tapasztalhatunk. 
 
 \subsubsection*{Példa az expr használatára}
-\texttt{scriptek/matematika/expr.sh}
-%\bigskip
-
 Nem csak az \texttt{expr} használható matematikai műveletek elvégzésére, hanem a \texttt{let} parancs is.
 %\bigskip
 
-\begin{lstlisting}[title=Példa let használatára (scriptek/matematika/let.sh)]
-#! /bin/bash
-COUNTER=10
-echo "$COUNTER"
-
-let COUNTER-=1
-echo "$COUNTER"
-
-let COUNTER=COUNTER-1
-echo "$COUNTER"
-
-
-echo "$((COUNTER-=1))"
-echo "$((COUNTER=COUNTER-1))"
-
-echo "$[COUNTER-=1]"
-echo "$[COUNTER=COUNTER-1]"
-\end{lstlisting}
-
-
+\lstinputlisting[language=bash]{scriptek/matematika/let.sh}
 
 \subsection{for}
 
